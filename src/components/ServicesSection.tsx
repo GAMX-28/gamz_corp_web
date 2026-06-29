@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 const services = [
   {
@@ -8,7 +8,7 @@ const services = [
     title: "Tu negocio\nresponde solo.",
     body: "Bot que agenda citas, contesta clientes y procesa pedidos en WhatsApp. Sin que toques nada.",
     icon: (
-      <svg viewBox="0 0 200 200" fill="none" className="w-56 h-56 md:w-72 md:h-72 text-white opacity-[0.07]">
+      <svg viewBox="0 0 200 200" fill="none" className="w-full h-full text-white">
         <rect x="52" y="18" width="96" height="164" rx="14" stroke="currentColor" strokeWidth="2.5"/>
         <line x1="52" y1="42" x2="148" y2="42" stroke="currentColor" strokeWidth="2"/>
         <line x1="52" y1="160" x2="148" y2="160" stroke="currentColor" strokeWidth="2"/>
@@ -27,7 +27,7 @@ const services = [
     title: "Análisis en\ntiempo real.",
     body: "Análisis e IA directo por Telegram y WhatsApp. Para tu equipo interno o para tus clientes.",
     icon: (
-      <svg viewBox="0 0 200 200" fill="none" className="w-56 h-56 md:w-72 md:h-72 text-white opacity-[0.07]">
+      <svg viewBox="0 0 200 200" fill="none" className="w-full h-full text-white">
         <line x1="100" y1="34" x2="100" y2="58" stroke="currentColor" strokeWidth="2.5"/>
         <circle cx="100" cy="28" r="7" stroke="currentColor" strokeWidth="2.5"/>
         <rect x="42" y="58" width="116" height="88" rx="16" stroke="currentColor" strokeWidth="2.5"/>
@@ -48,7 +48,7 @@ const services = [
     title: "IA que trabaja\nen tus procesos.",
     body: "Claude y otros modelos integrados en tu operación real, no en demos sino en producción.",
     icon: (
-      <svg viewBox="0 0 200 200" fill="none" className="w-56 h-56 md:w-72 md:h-72 text-white opacity-[0.07]">
+      <svg viewBox="0 0 200 200" fill="none" className="w-full h-full text-white">
         <circle cx="100" cy="100" r="20" stroke="currentColor" strokeWidth="2.5"/>
         <circle cx="100" cy="100" r="7" fill="currentColor"/>
         <circle cx="36" cy="60" r="11" stroke="currentColor" strokeWidth="2"/>
@@ -72,7 +72,7 @@ const services = [
     title: "Tu presencia\ndigital, sin límites.",
     body: "De landing page a sistema completo, construido a la medida y sin templates genéricos.",
     icon: (
-      <svg viewBox="0 0 200 200" fill="none" className="w-56 h-56 md:w-72 md:h-72 text-white opacity-[0.07]">
+      <svg viewBox="0 0 200 200" fill="none" className="w-full h-full text-white">
         <rect x="16" y="38" width="168" height="116" rx="10" stroke="currentColor" strokeWidth="2.5"/>
         <rect x="26" y="48" width="148" height="96" rx="6" stroke="currentColor" strokeWidth="1.5" opacity="0.35"/>
         <polyline points="42,72 52,80 42,88" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
@@ -92,7 +92,7 @@ const services = [
     title: "Más clientes,\ncon IA.",
     body: "Estrategias de contenido, anuncios y posicionamiento potenciados con IA para que tu negocio crezca solo.",
     icon: (
-      <svg viewBox="0 0 200 200" fill="none" className="w-56 h-56 md:w-72 md:h-72 text-white opacity-[0.07]">
+      <svg viewBox="0 0 200 200" fill="none" className="w-full h-full text-white">
         <circle cx="100" cy="100" r="70" stroke="currentColor" strokeWidth="2.5" strokeDasharray="6 5"/>
         <circle cx="100" cy="100" r="42" stroke="currentColor" strokeWidth="2"/>
         <circle cx="100" cy="100" r="14" stroke="currentColor" strokeWidth="2.5"/>
@@ -110,7 +110,7 @@ const services = [
     title: "Menos gasolina,\nmás entregas.",
     body: "Optimizamos las rutas de tus transportistas con IA. Menos combustible, menos tiempo muerto y más dinero en tu bolsillo.",
     icon: (
-      <svg viewBox="0 0 200 200" fill="none" className="w-56 h-56 md:w-72 md:h-72 text-white opacity-[0.07]">
+      <svg viewBox="0 0 200 200" fill="none" className="w-full h-full text-white">
         <circle cx="48" cy="68" r="10" stroke="currentColor" strokeWidth="2.5"/>
         <circle cx="152" cy="52" r="10" stroke="currentColor" strokeWidth="2.5"/>
         <circle cx="130" cy="140" r="10" stroke="currentColor" strokeWidth="2.5"/>
@@ -130,7 +130,7 @@ const services = [
     title: "Tu negocio,\nen internet.",
     body: "Sitio profesional con pagos, panel de administración y todo listo para operar sin depender de nadie más.",
     icon: (
-      <svg viewBox="0 0 200 200" fill="none" className="w-56 h-56 md:w-72 md:h-72 text-white opacity-[0.07]">
+      <svg viewBox="0 0 200 200" fill="none" className="w-full h-full text-white">
         <rect x="18" y="28" width="164" height="118" rx="10" stroke="currentColor" strokeWidth="2.5"/>
         <rect x="28" y="38" width="144" height="18" rx="4" stroke="currentColor" strokeWidth="1.5"/>
         <circle cx="40" cy="47" r="3" stroke="currentColor" strokeWidth="1.5"/>
@@ -163,121 +163,40 @@ interface Props {
 
 export default function ServicesSection({ className = "" }: Props) {
   const wrapperRef = useRef<HTMLDivElement>(null)
-  const stickyRef = useRef<HTMLDivElement>(null)
-  const statesRef = useRef<HTMLDivElement>(null)
-  const iconsRef = useRef<HTMLDivElement>(null)
-  const dotsRef = useRef<HTMLDivElement>(null)
-  const activeIndexRef = useRef(0)
+  const [activeIndex, setActiveIndex] = useState(0)
 
-  // ── Mobile: IntersectionObserver sincrónico (sin GSAP) ──
-  // Se ejecuta antes de que GSAP cargue; el CSS ya puso opacity:0
   useEffect(() => {
-    if (window.matchMedia("(min-width: 769px)").matches) return
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
-
-    const items = wrapperRef.current?.querySelectorAll<HTMLElement>(".srv-mobile-item") ?? []
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("srv-revealed")
-            io.unobserve(entry.target)
-          }
-        })
-      },
-      { threshold: 0.12 }
-    )
-    items.forEach((el, i) => {
-      el.style.transitionDelay = `${i * 100}ms`
-      io.observe(el)
-    })
-    return () => io.disconnect()
-  }, [])
-
-  // ── Desktop: GSAP sticky scroll ──
-  useEffect(() => {
-    if (window.matchMedia("(max-width: 768px)").matches) return
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    if (reduced) return
-
-    let ScrollTriggerModule: typeof import("gsap/ScrollTrigger").ScrollTrigger | null = null
-
-    const init = async () => {
-      const [gsapPkg, stPkg] = await Promise.all([
-        import("gsap"),
-        import("gsap/ScrollTrigger"),
-      ])
-      const gsap = gsapPkg.gsap
-      const ScrollTrigger = stPkg.ScrollTrigger
-      gsap.registerPlugin(ScrollTrigger)
-      ScrollTriggerModule = ScrollTrigger
-
-      const wrapper = wrapperRef.current
-      const sticky = stickyRef.current
-      const statesEl = statesRef.current
-      const iconsEl = iconsRef.current
-      const dotsEl = dotsRef.current
-      if (!wrapper || !sticky || !statesEl || !iconsEl) return
-
-      const states = statesEl.querySelectorAll<HTMLElement>(".srv-state")
-      const icons = iconsEl.querySelectorAll<HTMLElement>(".srv-icon")
-      const dots = dotsEl?.querySelectorAll<HTMLElement>(".srv-dot")
-
-      gsap.set([...states].slice(1), { opacity: 0, y: 22 })
-      gsap.set([...icons].slice(1), { opacity: 0 })
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: wrapper,
-          start: "top top",
-          end: "+=600%",
-          pin: sticky,
-          scrub: 1,
-          anticipatePin: 1,
-          onUpdate: (self) => {
-            const idx = Math.min(6, Math.floor(self.progress * 7))
-            if (idx !== activeIndexRef.current) {
-              activeIndexRef.current = idx
-              dots?.forEach((d, i) => {
-                d.style.width = i === idx ? "10px" : "4px"
-                d.style.height = i === idx ? "10px" : "4px"
-                d.style.opacity = i === idx ? "1" : "0.25"
-              })
-            }
-          },
-        },
-      })
-
-      const dur = 0.18
-      ;[0, 1, 2, 3, 4, 5].forEach((i) => {
-        const at = i + 0.78
-        tl.to(states[i], { opacity: 0, y: -22, duration: dur }, at)
-          .to(icons[i], { opacity: 0, duration: dur }, at)
-          .fromTo(states[i + 1], { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: dur }, at + 0.14)
-          .to(icons[i + 1], { opacity: 1, duration: dur }, at + 0.14)
-      })
-
-      return () => {
-        gsap.set([...states, ...icons], { clearProps: "all" })
-      }
+    const handleScroll = () => {
+      if (!wrapperRef.current) return
+      const rect = wrapperRef.current.getBoundingClientRect()
+      const scrolled = -rect.top
+      const total = rect.height - window.innerHeight
+      const progress = Math.max(0, Math.min(1, scrolled / total))
+      const index = Math.min(services.length - 1, Math.floor(progress * services.length))
+      setActiveIndex(index)
     }
 
-    init()
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    document.addEventListener("scroll", handleScroll, { passive: true })
 
     return () => {
-      ScrollTriggerModule?.getAll().forEach((t) => t.kill())
+      window.removeEventListener("scroll", handleScroll)
+      document.removeEventListener("scroll", handleScroll)
     }
   }, [])
 
   return (
-    <section id="servicios" ref={wrapperRef} className={`relative ${className}`}>
-
-      {/* ── Desktop: sticky scroll ── */}
+    <section
+      id="servicios"
+      ref={wrapperRef}
+      className={`relative ${className}`}
+      style={{ height: `${services.length * 100}vh` }}
+    >
       <div
-        ref={stickyRef}
-        className="hidden md:flex items-center justify-between h-screen px-[10%] gap-[8%] relative overflow-hidden"
+        style={{ position: "sticky", top: 0, height: "100vh" }}
+        className="relative overflow-hidden"
       >
-        {/* Glow ambiental estático — acompaña el calor del hero */}
+        {/* Glow ambiental */}
         <div
           aria-hidden
           style={{
@@ -290,79 +209,146 @@ export default function ServicesSection({ className = "" }: Props) {
           }}
         />
 
-        {/* Text states */}
-        <div ref={statesRef} className="relative z-10 flex-[0_0_42%] h-[360px]">
-          {services.map((s, i) => (
-            <div key={i} className="srv-state absolute inset-0 flex flex-col justify-center">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-5" style={{ color: "#2563EB" }}>
-                {s.eyebrow}
-              </p>
-              <h2 className="font-space-grotesk text-[clamp(36px,3.5vw,52px)] font-bold leading-[1.06] tracking-tight text-white mb-5 whitespace-pre-line">
-                {s.title}
-              </h2>
-              <p className="text-[17px] leading-relaxed max-w-[360px]" style={{ color: "#86868B" }}>
-                {s.body}
-              </p>
-            </div>
-          ))}
+        {/* ── Mobile layout ── */}
+        <div className="md:hidden absolute inset-0 flex flex-col items-center justify-center px-6 z-10">
+          {/* Icons */}
+          <div className="relative w-20 h-20 mb-8 flex-shrink-0">
+            {services.map((s, i) => (
+              <div
+                key={i}
+                className="absolute inset-0"
+                style={{
+                  opacity: i === activeIndex ? 0.15 : 0,
+                  transition: "opacity 0.7s ease",
+                }}
+              >
+                {s.icon}
+              </div>
+            ))}
+          </div>
+
+          {/* Text states */}
+          <div className="relative w-full text-center" style={{ height: "260px" }}>
+            {services.map((s, i) => (
+              <div
+                key={i}
+                className="absolute inset-0 flex flex-col items-center"
+                style={{
+                  opacity: i === activeIndex ? 1 : 0,
+                  transform: i === activeIndex
+                    ? "translateY(0)"
+                    : i < activeIndex
+                    ? "translateY(-16px)"
+                    : "translateY(16px)",
+                  transition: "opacity 0.7s ease, transform 0.7s ease",
+                  pointerEvents: i === activeIndex ? "auto" : "none",
+                }}
+              >
+                <p
+                  className="font-semibold uppercase mb-3"
+                  style={{ color: "#2563EB", fontSize: "10px", letterSpacing: "0.22em" }}
+                >
+                  {s.eyebrow}
+                </p>
+                <h2
+                  className="font-space-grotesk font-bold leading-[1.06] tracking-tight text-white mb-4 whitespace-pre-line"
+                  style={{ fontSize: "clamp(32px, 8vw, 48px)" }}
+                >
+                  {s.title}
+                </h2>
+                <p style={{ color: "#86868B", fontSize: "15px", lineHeight: "1.6" }}>
+                  {s.body}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Dots — horizontal bottom */}
+          <div className="absolute bottom-8 flex flex-row gap-2 items-center">
+            {services.map((_, i) => (
+              <div
+                key={i}
+                className="rounded-full bg-white transition-all duration-300"
+                style={{
+                  width: i === activeIndex ? "8px" : "6px",
+                  height: i === activeIndex ? "8px" : "6px",
+                  opacity: i === activeIndex ? 1 : 0.3,
+                }}
+              />
+            ))}
+          </div>
         </div>
 
-        {/* Icons */}
-        <div ref={iconsRef} className="relative z-10 flex-1 h-[320px] flex items-center justify-center">
-          {services.map((s, i) => (
-            <div key={i} className="srv-icon absolute inset-0 flex items-center justify-center">
-              {s.icon}
-            </div>
-          ))}
-        </div>
+        {/* ── Desktop layout ── */}
+        <div className="hidden md:flex items-center justify-between h-full px-[10%] gap-[8%]">
+          {/* Text states */}
+          <div className="relative flex-[0_0_42%]" style={{ height: "360px" }}>
+            {services.map((s, i) => (
+              <div
+                key={i}
+                className="absolute inset-0 flex flex-col justify-center"
+                style={{
+                  opacity: i === activeIndex ? 1 : 0,
+                  transform: i === activeIndex
+                    ? "translateY(0)"
+                    : i < activeIndex
+                    ? "translateY(-22px)"
+                    : "translateY(22px)",
+                  transition: "opacity 0.7s ease, transform 0.7s ease",
+                  pointerEvents: i === activeIndex ? "auto" : "none",
+                }}
+              >
+                <p
+                  className="font-semibold uppercase mb-5"
+                  style={{ color: "#2563EB", fontSize: "11px", letterSpacing: "0.22em" }}
+                >
+                  {s.eyebrow}
+                </p>
+                <h2
+                  className="font-space-grotesk font-bold leading-[1.06] tracking-tight text-white mb-5 whitespace-pre-line"
+                  style={{ fontSize: "clamp(36px, 3.5vw, 52px)" }}
+                >
+                  {s.title}
+                </h2>
+                <p style={{ color: "#86868B", fontSize: "17px", lineHeight: "1.6", maxWidth: "360px" }}>
+                  {s.body}
+                </p>
+              </div>
+            ))}
+          </div>
 
-        {/* Progress dots */}
-        <div ref={dotsRef} className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-3 items-center z-10">
-          {services.map((_, i) => (
-            <div
-              key={i}
-              className="srv-dot rounded-full bg-white transition-all duration-300"
-              style={{
-                width: i === 0 ? "10px" : "4px",
-                height: i === 0 ? "10px" : "4px",
-                opacity: i === 0 ? 1 : 0.25,
-              }}
-            />
-          ))}
-        </div>
-      </div>
+          {/* Icons */}
+          <div className="relative flex-1 flex items-center justify-center" style={{ height: "320px" }}>
+            {services.map((s, i) => (
+              <div
+                key={i}
+                className="absolute inset-0 flex items-center justify-center"
+                style={{
+                  opacity: i === activeIndex ? 1 : 0,
+                  transition: "opacity 0.7s ease",
+                }}
+              >
+                <div style={{ width: "288px", height: "288px", opacity: 0.07 }}>
+                  {s.icon}
+                </div>
+              </div>
+            ))}
+          </div>
 
-      {/* ── Mobile: stacked ── */}
-      <div className="mobile-services md:hidden px-6 pt-16 pb-24 relative">
-        {/* Warm ambient glow at top of mobile section */}
-        <div
-          aria-hidden
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: "55%",
-            background:
-              "radial-gradient(ellipse at 50% 0%, rgba(185,72,10,0.22) 0%, rgba(130,50,6,0.09) 45%, transparent 70%)",
-            pointerEvents: "none",
-            zIndex: 0,
-          }}
-        />
-        <div className="space-y-20">
-          {services.map((s, i) => (
-            <div key={i} className="srv-mobile-item relative z-10">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-4" style={{ color: "#2563EB" }}>
-                {s.eyebrow}
-              </p>
-              <h2 className="font-space-grotesk text-[34px] font-bold leading-[1.06] tracking-tight text-white mb-4 whitespace-pre-line">
-                {s.title}
-              </h2>
-              <p className="text-[16px] leading-relaxed" style={{ color: "#86868B" }}>
-                {s.body}
-              </p>
-            </div>
-          ))}
+          {/* Dots — vertical right */}
+          <div className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-3 items-center z-10">
+            {services.map((_, i) => (
+              <div
+                key={i}
+                className="rounded-full bg-white transition-all duration-300"
+                style={{
+                  width: i === activeIndex ? "10px" : "4px",
+                  height: i === activeIndex ? "10px" : "4px",
+                  opacity: i === activeIndex ? 1 : 0.25,
+                }}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
