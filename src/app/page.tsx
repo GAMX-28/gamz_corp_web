@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import Nav from "@/components/Nav"
 import ServicesSection from "@/components/ServicesSection"
 import TestimoniosSection from "@/components/TestimoniosSection"
@@ -52,6 +52,12 @@ const projects = [
 ]
 
 export default function Home() {
+  const [grayColor, setGrayColor] = useState('#86868B')
+
+  useEffect(() => {
+    if (window.innerWidth < 768) setGrayColor('#a0a0a0')
+  }, [])
+
   // Scroll reveal for data-reveal elements
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
@@ -136,7 +142,7 @@ export default function Home() {
               <h3 className="font-space-grotesk text-[22px] font-bold text-white leading-snug mb-3">
                 {p.title}
               </h3>
-              <p className="text-[15px] leading-relaxed mb-4" style={{ color: "#86868B" }}>
+              <p className="text-[15px] leading-relaxed mb-4" style={{ color: grayColor }}>
                 {p.desc}
               </p>
               <p className="text-[12px] uppercase tracking-[0.1em]" style={{ color: "#3D3D3F" }}>
@@ -158,7 +164,7 @@ export default function Home() {
             >
               <AnimatedNumber target={20} suffix="+" />
             </div>
-            <p className="text-[15px] leading-relaxed" style={{ color: "#86868B" }}>
+            <p className="text-[15px] leading-relaxed" style={{ color: grayColor }}>
               Proyectos en producción.
             </p>
           </div>
@@ -170,7 +176,7 @@ export default function Home() {
             >
               <AnimatedNumber target={100} suffix="%" />
             </div>
-            <p className="text-[15px] leading-relaxed" style={{ color: "#86868B" }}>
+            <p className="text-[15px] leading-relaxed" style={{ color: grayColor }}>
               Sin código adicional tuyo.
             </p>
           </div>
@@ -182,7 +188,7 @@ export default function Home() {
             >
               24/7
             </div>
-            <p className="text-[15px] leading-relaxed" style={{ color: "#86868B" }}>
+            <p className="text-[15px] leading-relaxed" style={{ color: grayColor }}>
               Disponible siempre.
             </p>
           </div>
@@ -193,7 +199,7 @@ export default function Home() {
       <section id="stack" className="section-glow-subtle py-20 border-t border-white/[0.06] overflow-hidden">
         <p
           className="text-center text-[11px] font-semibold uppercase tracking-[0.22em] mb-10"
-          style={{ color: "#86868B" }}
+          style={{ color: grayColor }}
         >
           Stack tecnológico
         </p>
@@ -243,7 +249,7 @@ export default function Home() {
         <p
           className="mb-6"
           style={{
-            color: "#86868B",
+            color: grayColor,
             fontSize: "11px",
             letterSpacing: "0.22em",
             textTransform: "uppercase",
@@ -267,7 +273,7 @@ export default function Home() {
         <p
           className="mx-auto mb-12"
           style={{
-            color: "#86868B",
+            color: grayColor,
             fontFamily: "Inter, sans-serif",
             fontSize: "19px",
             lineHeight: "1.6",

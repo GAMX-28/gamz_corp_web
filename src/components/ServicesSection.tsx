@@ -164,6 +164,11 @@ interface Props {
 export default function ServicesSection({ className = "" }: Props) {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const [activeIndex, setActiveIndex] = useState(0)
+  const [grayColor, setGrayColor] = useState('#86868B')
+
+  useEffect(() => {
+    if (window.innerWidth < 768) setGrayColor('#a0a0a0')
+  }, [])
 
   useEffect(() => {
     const sentinelEls = wrapperRef.current?.querySelectorAll("[data-index]")
@@ -276,7 +281,7 @@ export default function ServicesSection({ className = "" }: Props) {
                 >
                   {s.title}
                 </h2>
-                <p style={{ color: "#86868B", fontSize: "15px", lineHeight: "1.6" }}>
+                <p style={{ color: grayColor, fontSize: "15px", lineHeight: "1.6" }}>
                   {s.body}
                 </p>
               </div>
@@ -330,7 +335,7 @@ export default function ServicesSection({ className = "" }: Props) {
                 >
                   {s.title}
                 </h2>
-                <p style={{ color: "#86868B", fontSize: "17px", lineHeight: "1.6", maxWidth: "360px" }}>
+                <p style={{ color: grayColor, fontSize: "17px", lineHeight: "1.6", maxWidth: "360px" }}>
                   {s.body}
                 </p>
               </div>

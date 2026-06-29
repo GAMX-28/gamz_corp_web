@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const testimonios = [
   {
@@ -21,6 +21,11 @@ const testimonios = [
 
 export default function TestimoniosSection() {
   const cardsRef = useRef<HTMLDivElement[]>([])
+  const [grayColor, setGrayColor] = useState('#86868B')
+
+  useEffect(() => {
+    if (window.innerWidth < 768) setGrayColor('#a0a0a0')
+  }, [])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -103,7 +108,7 @@ export default function TestimoniosSection() {
               </p>
               <p
                 className="mt-0.5"
-                style={{ color: '#86868B', fontSize: '12px', fontFamily: 'Inter, sans-serif' }}
+                style={{ color: grayColor, fontSize: '12px', fontFamily: 'Inter, sans-serif' }}
               >
                 {t.negocio}
               </p>
