@@ -166,23 +166,28 @@ export default function ServicesSection({ className = "" }: Props) {
   const [activeIndex, setActiveIndex] = useState(0)
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (!wrapperRef.current) return
-      const rect = wrapperRef.current.getBoundingClientRect()
-      const scrolled = -rect.top
-      const total = rect.height - window.innerHeight
-      const progress = Math.max(0, Math.min(1, scrolled / total))
-      const index = Math.min(services.length - 1, Math.floor(progress * services.length))
-      setActiveIndex(index)
-    }
+    const sentinelEls = wrapperRef.current?.querySelectorAll("[data-index]")
+    if (!sentinelEls) return
 
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    document.addEventListener("scroll", handleScroll, { passive: true })
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = parseInt(
+              (entry.target as HTMLElement).dataset.index || "0"
+            )
+            setActiveIndex(Math.min(index, services.length - 1))
+          }
+        })
+      },
+      {
+        threshold: 0,
+        rootMargin: "-40% 0px -40% 0px",
+      }
+    )
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll)
-      document.removeEventListener("scroll", handleScroll)
-    }
+    sentinelEls.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
   }, [])
 
   return (
@@ -192,6 +197,21 @@ export default function ServicesSection({ className = "" }: Props) {
       className={`relative ${className}`}
       style={{ height: `${services.length * 100}vh` }}
     >
+      {/* Sentinels — en el wrapper 700vh para que IO los detecte al scrollear */}
+      {Array.from({ length: services.length }, (_, i) => (
+        <div
+          key={i}
+          data-index={i}
+          style={{
+            position: "absolute",
+            top: `${(i / services.length) * 100}%`,
+            height: "1px",
+            width: "100%",
+            pointerEvents: "none",
+          }}
+        />
+      ))}
+
       <div
         style={{ position: "sticky", top: 0, height: "100vh" }}
         className="relative overflow-hidden"
