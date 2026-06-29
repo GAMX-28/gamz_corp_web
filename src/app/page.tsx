@@ -274,7 +274,7 @@ export default function Home() {
             maxWidth: "460px",
           }}
         >
-          Cuéntame qué necesitas, sin rodeos, te respondo ese mismo día
+          Dinos qué necesitas y te contactamos ese mismo día con una solución a la medida.
         </p>
         <div className="flex items-center justify-center">
           <a
