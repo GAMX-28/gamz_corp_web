@@ -30,6 +30,24 @@ const projects = [
     desc: "Sitios para negocios mexicanos: desde landing page hasta plataforma con pagos, auth y panel de admin.",
     stack: "Next.js, React, Tailwind, Vercel",
   },
+  {
+    num: "04",
+    title: "Optimización de rutas con IA",
+    desc: "Sistema que calcula las rutas más eficientes para flotas de reparto. Menos combustible, más entregas por día.",
+    stack: "Python, Google Maps API, Claude API, Supabase",
+  },
+  {
+    num: "05",
+    title: "Marketing digital con IA",
+    desc: "Generación automática de contenido, anuncios y estrategia SEO potenciada con IA para negocios locales.",
+    stack: "Claude API, Next.js, Zoho, Vercel",
+  },
+  {
+    num: "06",
+    title: "CRM y ventas automatizadas",
+    desc: "Pipeline de ventas conectado con WhatsApp: leads, seguimiento y cierre sin intervención manual.",
+    stack: "Zoho CRM, WhatsApp API, Node.js, Railway",
+  },
 ]
 
 export default function Home() {
