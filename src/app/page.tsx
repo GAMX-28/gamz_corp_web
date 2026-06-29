@@ -3,6 +3,7 @@
 import { useEffect } from "react"
 import Nav from "@/components/Nav"
 import ServicesSection from "@/components/ServicesSection"
+import TestimoniosSection from "@/components/TestimoniosSection"
 import AnimatedShaderHero from "@/components/ui/animated-shader-hero"
 import AnimatedNumber from "@/components/AnimatedNumber"
 
@@ -120,6 +121,9 @@ export default function Home() {
 
       {/* ── Servicios ── */}
       <ServicesSection className="section-glow-blue" />
+
+      {/* ── Testimonios ── */}
+      <TestimoniosSection />
 
       {/* ── Proyectos ── */}
       <section id="proyectos" className="section-glow-subtle px-6 md:px-[10%] py-32 border-t border-white/[0.06]">
