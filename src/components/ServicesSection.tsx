@@ -6,7 +6,7 @@ const services = [
   {
     eyebrow: "WHATSAPP",
     title: "Tu negocio\nresponde solo.",
-    body: "Bot inteligente que automatiza la atención a clientes, agenda citas, procesa pedidos y mucho más, adaptado a las necesidades de tu negocio.",
+    body: "Tu negocio responde, agenda y vende por WhatsApp solo, sin que tú o tu equipo tengan que estar pendientes del teléfono todo el día.",
     icon: (
       <svg viewBox="0 0 200 200" fill="none" className="w-full h-full text-white">
         <rect x="52" y="18" width="96" height="164" rx="14" stroke="currentColor" strokeWidth="2.5"/>
@@ -25,7 +25,7 @@ const services = [
   {
     eyebrow: "TELEGRAM & WHATSAPP",
     title: "Análisis en\ntiempo real.",
-    body: "Automatizaciones e IA integrada directamente en Telegram para tu equipo o tus clientes.",
+    body: "Notificaciones, análisis y atención automatizada directo en Telegram, para tu equipo o para los clientes de tu negocio.",
     icon: (
       <svg viewBox="0 0 200 200" fill="none" className="w-full h-full text-white">
         <line x1="100" y1="34" x2="100" y2="58" stroke="currentColor" strokeWidth="2.5"/>
@@ -46,7 +46,7 @@ const services = [
   {
     eyebrow: "INTELIGENCIA ARTIFICIAL",
     title: "IA que trabaja\nen tus procesos.",
-    body: "Integramos IA en los procesos de tu empresa para que trabajen más inteligente y generen mejores resultados.",
+    body: "Hacemos que la IA trabaje dentro de tu negocio, resolviendo tareas reales que hoy te quitan tiempo y dinero.",
     icon: (
       <svg viewBox="0 0 200 200" fill="none" className="w-full h-full text-white">
         <circle cx="100" cy="100" r="20" stroke="currentColor" strokeWidth="2.5"/>
@@ -70,7 +70,7 @@ const services = [
   {
     eyebrow: "DESARROLLO WEB",
     title: "Tu presencia\ndigital, sin límites.",
-    body: "Creamos sitios web a la medida de tu negocio, desde landing pages hasta plataformas completas con pagos, panel de administración y gestión de usuarios.",
+    body: "Construimos tu presencia digital desde cero, sitios que se ven profesionales y están pensados para convertir visitas en clientes.",
     icon: (
       <svg viewBox="0 0 200 200" fill="none" className="w-full h-full text-white">
         <rect x="16" y="38" width="168" height="116" rx="10" stroke="currentColor" strokeWidth="2.5"/>
@@ -128,7 +128,7 @@ const services = [
   {
     eyebrow: "PÁGINAS WEB",
     title: "Tu negocio,\nen internet.",
-    body: "Sitio profesional diseñado para impulsar el crecimiento de tu empresa, con todo lo que necesitas para operar en internet desde el primer día.",
+    body: "Tu negocio en internet con todo lo que necesita, diseño a tu medida, pagos integrados y listo para operar desde el primer día.",
     icon: (
       <svg viewBox="0 0 200 200" fill="none" className="w-full h-full text-white">
         <rect x="18" y="28" width="164" height="118" rx="10" stroke="currentColor" strokeWidth="2.5"/>
@@ -300,33 +300,6 @@ export default function ServicesSection({ className = "" }: Props) {
             ))}
           </div>
 
-          {/* Dots — lateral derecho mobile */}
-          <div
-            style={{
-              position: "fixed",
-              right: "16px",
-              top: "50%",
-              transform: "translateY(-50%)",
-              display: "flex",
-              flexDirection: "column",
-              gap: "8px",
-              alignItems: "center",
-              zIndex: 50,
-            }}
-          >
-            {services.map((_, i) => (
-              <div
-                key={i}
-                style={{
-                  width: i === activeIndex ? "8px" : "6px",
-                  height: i === activeIndex ? "8px" : "6px",
-                  borderRadius: "9999px",
-                  background: i === activeIndex ? "white" : "rgba(255,255,255,0.25)",
-                  transition: "all 0.3s ease",
-                }}
-              />
-            ))}
-          </div>
         </div>
 
         {/* ── Desktop layout ── */}
@@ -385,21 +358,33 @@ export default function ServicesSection({ className = "" }: Props) {
             ))}
           </div>
 
-          {/* Dots — lateral derecho desktop */}
-          <div style={{ position: "fixed", right: "32px", top: "50%", transform: "translateY(-50%)", display: "flex", flexDirection: "column", gap: "8px", alignItems: "center", zIndex: 50 }}>
-            {services.map((_, i) => (
-              <div
-                key={i}
-                style={{
-                  width: i === activeIndex ? "8px" : "6px",
-                  height: i === activeIndex ? "8px" : "6px",
-                  borderRadius: "9999px",
-                  background: i === activeIndex ? "white" : "rgba(255,255,255,0.25)",
-                  transition: "all 0.3s ease",
-                }}
-              />
-            ))}
-          </div>
+        </div>
+
+        {/* Dots — único bloque vertical lateral derecho */}
+        <div
+          style={{
+            position: "fixed",
+            right: "20px",
+            top: "50%",
+            transform: "translateY(-50%)",
+            display: "flex",
+            flexDirection: "column",
+            gap: "8px",
+            zIndex: 50,
+          }}
+        >
+          {services.map((_, i) => (
+            <div
+              key={i}
+              style={{
+                width: i === activeIndex ? "8px" : "6px",
+                height: i === activeIndex ? "8px" : "6px",
+                borderRadius: "9999px",
+                background: i === activeIndex ? "white" : "rgba(255,255,255,0.25)",
+                transition: "all 0.3s ease",
+              }}
+            />
+          ))}
         </div>
       </div>
     </section>

@@ -12,32 +12,17 @@ const projects = [
   {
     num: "01",
     title: "Sistema de citas automatizado",
-    desc: "Asistente virtual que gestiona reservas, envía recordatorios y confirma citas por WhatsApp, disponible las 24 horas sin intervención humana.",
+    desc: "Tu negocio agenda solo, manda recordatorios y confirma citas por WhatsApp, sin que nadie tenga que estar pendiente del teléfono.",
   },
   {
     num: "02",
-    title: "Bot de análisis con IA",
-    desc: "Análisis deportivo en tiempo real por Telegram, con IA que procesa los datos y pagos integrados para monetizar el servicio.",
+    title: "Optimizador de rutas con IA",
+    desc: "Calcula las rutas más eficientes para tu flota de reparto, menos combustible, menos tiempo en carretera y más entregas por día.",
   },
   {
     num: "03",
     title: "Páginas web profesionales",
-    desc: "Sitios web a la medida del negocio, desde landing pages hasta plataformas completas con pagos, autenticación y panel de administración.",
-  },
-  {
-    num: "04",
-    title: "Optimización de rutas con IA",
-    desc: "Sistema que calcula las rutas más eficientes para flotas de reparto. Menos combustible, más entregas por día.",
-  },
-  {
-    num: "05",
-    title: "Marketing digital con IA",
-    desc: "Generación automática de contenido, anuncios y estrategia SEO potenciada con IA para negocios locales.",
-  },
-  {
-    num: "06",
-    title: "CRM y ventas automatizadas",
-    desc: "Pipeline de ventas conectado con WhatsApp: leads, seguimiento y cierre sin intervención manual.",
+    desc: "Sitio diseñado a la medida de tu negocio, con lo que necesitas para vender, cobrar y atender clientes desde internet.",
   },
 ]
 
