@@ -16,19 +16,19 @@ const projects = [
     num: "01",
     title: "Sistema de citas automatizado",
     desc: "Bot de WhatsApp que reserva, recuerda y confirma citas solo. El negocio opera sin operador humano.",
-    stack: "Node.js · Supabase · Twilio · Railway",
+    stack: "Node.js, Supabase, Twilio, Railway",
   },
   {
     num: "02",
     title: "Bot de análisis con IA",
     desc: "Análisis deportivo en tiempo real por Telegram. Claude AI procesa los datos, MercadoPago cobra.",
-    stack: "Claude API · Telegram · MercadoPago · Supabase",
+    stack: "Claude API, Telegram, MercadoPago, Supabase",
   },
   {
     num: "03",
     title: "Páginas web profesionales",
-    desc: "Sitios para negocios mexicanos — desde landing page hasta plataforma con pagos, auth y panel de admin.",
-    stack: "Next.js · React · Tailwind · Vercel",
+    desc: "Sitios para negocios mexicanos: desde landing page hasta plataforma con pagos, auth y panel de admin.",
+    stack: "Next.js, React, Tailwind, Vercel",
   },
 ]
 
@@ -43,17 +43,20 @@ export default function Home() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const el = entry.target as HTMLElement
-            el.style.transitionDelay = (el.dataset.delay || "0") + "ms"
-            el.classList.add("opacity-100", "translate-y-0")
-            el.classList.remove("opacity-0", "translate-y-8")
+            const delay = el.dataset.delay || "0"
+            el.style.transitionDelay = delay + "ms"
+            el.style.opacity = "1"
+            el.style.transform = "translateY(0)"
             io.unobserve(el)
           }
         })
       },
-      { threshold: 0.15 }
+      { threshold: 0.08 }
     )
     els.forEach((el) => {
-      el.classList.add("opacity-0", "translate-y-8", "transition-all", "duration-700")
+      el.style.opacity = "0"
+      el.style.transform = "translateY(28px)"
+      el.style.transition = "opacity 0.75s cubic-bezier(0.22,1,0.36,1), transform 0.75s cubic-bezier(0.22,1,0.36,1)"
       io.observe(el)
     })
     return () => io.disconnect()
@@ -120,7 +123,7 @@ export default function Home() {
               <div
                 aria-hidden
                 className="font-space-grotesk font-bold text-white select-none leading-none mb-2"
-                style={{ fontSize: "clamp(72px,10vw,120px)", opacity: 0.05, lineHeight: 1 }}
+                style={{ fontSize: "clamp(72px,10vw,120px)", opacity: 0.13, lineHeight: 1 }}
               >
                 {p.num}
               </div>
