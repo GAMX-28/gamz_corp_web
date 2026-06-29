@@ -94,7 +94,7 @@ export default function Home() {
           right: 0,
           height: "85vh",
           background:
-            "radial-gradient(ellipse 110% 50% at 50% 32%, rgba(191,132,74,0.55) 0%, rgba(164,130,73,0.22) 55%, transparent 100%)",
+            "radial-gradient(ellipse 110% 50% at 50% 32%, rgba(210,108,48,0.58) 0%, rgba(182,92,38,0.22) 55%, transparent 100%)",
           pointerEvents: "none",
           zIndex: 5,
         }}
@@ -242,7 +242,7 @@ export default function Home() {
       >
         <p
           className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-6"
-          style={{ color: "#2563EB" }}
+          style={{ color: "#C4904A" }}
         >
           CONTACTO
         </p>
