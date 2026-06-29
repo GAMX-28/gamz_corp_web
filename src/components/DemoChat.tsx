@@ -104,7 +104,7 @@ export default function DemoChat() {
 
       {/* ── Modal ── */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
           {/* Backdrop */}
           <div
             className="absolute inset-0 bg-black/75 backdrop-blur-sm"
@@ -113,11 +113,21 @@ export default function DemoChat() {
 
           {/* Panel */}
           <div
-            className="relative w-full sm:max-w-[390px] flex flex-col overflow-hidden
-              bg-[#080808] border border-white/[0.08]
-              rounded-t-[28px] sm:rounded-[28px]
-              shadow-[0_32px_80px_rgba(0,0,0,0.7)]"
-            style={{ height: 'min(580px, 88svh)' }}
+            className="sm:rounded-3xl sm:h-[560px] sm:max-h-[560px] sm:w-[400px] shadow-[0_32px_80px_rgba(0,0,0,0.7)]"
+            style={{
+              position: 'relative',
+              width: '100%',
+              maxWidth: '428px',
+              height: '90vh',
+              maxHeight: '90vh',
+              background: '#0D0D0D',
+              border: '1px solid rgba(255,255,255,0.1)',
+              borderRadius: '24px 24px 0 0',
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+              marginTop: 'auto',
+            }}
           >
 
             {/* Header */}
@@ -237,7 +247,7 @@ export default function DemoChat() {
 
                 {/* Input */}
                 <div
-                  className="flex-shrink-0 px-4 pb-5 pt-3"
+                  className="demo-input-area flex-shrink-0 px-4 pb-5 pt-3"
                   style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}
                 >
                   <div

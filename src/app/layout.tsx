@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Space_Grotesk, Inter } from "next/font/google"
 import "./globals.css"
 import DemoChat from "@/components/DemoChat"
+import { ScrollToTop } from "@/components/ScrollToTop"
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -35,6 +36,7 @@ export default function RootLayout({
       className={`${spaceGrotesk.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-black text-white">
+        <ScrollToTop />
         {children}
         <DemoChat />
       </body>

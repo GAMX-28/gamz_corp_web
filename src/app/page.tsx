@@ -256,30 +256,48 @@ export default function Home() {
         className="section-glow-blue px-6 md:px-[10%] py-32 border-t border-white/[0.06] text-center"
       >
         <p
-          className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-6"
-          style={{ color: "#C4904A" }}
+          className="mb-6"
+          style={{
+            color: "#86868B",
+            fontSize: "11px",
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
+            fontFamily: "Space Grotesk, sans-serif",
+          }}
         >
           CONTACTO
         </p>
         <h2
           data-reveal
-          className="font-space-grotesk font-bold text-white leading-[1.04] tracking-tight mb-6"
-          style={{ fontSize: "clamp(52px,8vw,96px)" }}
+          className="leading-[1.04] tracking-tight mb-6"
+          style={{
+            color: "#ffffff",
+            fontFamily: "Space Grotesk, sans-serif",
+            fontWeight: 800,
+            fontSize: "clamp(52px,8vw,96px)",
+          }}
         >
           ¿Hablamos?
         </h2>
         <p
-          className="mx-auto mb-12 leading-relaxed"
-          style={{ color: "#86868B", fontSize: "19px", maxWidth: "460px" }}
+          className="mx-auto mb-12"
+          style={{
+            color: "#86868B",
+            fontFamily: "Inter, sans-serif",
+            fontSize: "19px",
+            lineHeight: "1.6",
+            maxWidth: "460px",
+          }}
         >
-          Cuéntanos qué necesitas. Te contactamos ese mismo día.
+          Cuéntame qué necesitas, sin rodeos, te respondo ese mismo día
         </p>
         <div className="flex items-center justify-center">
           <a
             href="https://wa.me/525526849714"
             target="_blank"
             rel="noopener noreferrer"
-            className="h-14 px-10 rounded-full bg-white text-black font-semibold text-[16px] tracking-tight transition hover:opacity-80 active:scale-[0.97] inline-flex items-center"
+            className="h-14 px-10 rounded-full font-semibold text-[16px] tracking-tight transition hover:opacity-80 active:scale-[0.97] inline-flex items-center"
+            style={{ background: "white", color: "black" }}
           >
             WhatsApp ↗
           </a>

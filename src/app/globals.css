@@ -127,9 +127,13 @@
     font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+    overscroll-behavior: none;
+    overscroll-behavior-y: none;
   }
   html {
     scroll-behavior: smooth;
+    overscroll-behavior: none;
+    overscroll-behavior-y: none;
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-space-grotesk), 'Space Grotesk', system-ui, sans-serif;
@@ -189,5 +193,11 @@
   .srv-mobile-item.srv-revealed {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .demo-input-area {
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
   }
 }
