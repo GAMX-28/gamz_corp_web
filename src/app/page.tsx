@@ -81,16 +81,19 @@ export default function Home() {
         />
       </div>
 
-      {/* Color bridge — empieza donde termina el hero y sangra hacia abajo */}
+      {/* Color bridge — absolute, sin impacto en el layout.
+          Pico exactamente en 100vh = donde termina el hero */}
       <div
         aria-hidden
         style={{
-          marginTop: "-38vh",
-          height: "80vh",
+          position: "absolute",
+          top: "52vh",
+          left: 0,
+          right: 0,
+          height: "96vh",
           background:
-            "linear-gradient(to bottom, transparent 0%, rgba(128,50,8,0.42) 22%, rgba(85,33,5,0.24) 48%, rgba(42,16,2,0.09) 72%, transparent 100%)",
+            "linear-gradient(to bottom, transparent 0%, rgba(128,50,8,0.52) 50%, rgba(85,33,5,0.26) 72%, rgba(42,16,2,0.09) 88%, transparent 100%)",
           pointerEvents: "none",
-          position: "relative",
           zIndex: 5,
         }}
       />
