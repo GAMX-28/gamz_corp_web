@@ -262,7 +262,7 @@ export default function Home() {
             fontSize: "clamp(52px,8vw,96px)",
           }}
         >
-          ¿Hablamos?
+          ¿Tienes un proyecto? Cuéntanos.
         </h2>
         <p
           className="mx-auto mb-12"
