@@ -134,7 +134,6 @@
     scroll-behavior: smooth;
     overscroll-behavior: none;
     overscroll-behavior-y: none;
-    scroll-snap-type: y proximity;
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-space-grotesk), 'Space Grotesk', system-ui, sans-serif;
@@ -201,16 +200,6 @@
   .demo-input-area {
     padding-bottom: calc(16px + env(safe-area-inset-bottom));
   }
-}
-
-/* Scroll snap sections */
-#servicios {
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-}
-
-#clientes {
-  scroll-snap-align: start;
 }
 
 /* Mobile brightness & contrast fixes */

@@ -84,7 +84,6 @@ export default function Home() {
         />
       </div>
 
-
       {/* ── Servicios ── */}
       <ServicesSection className="section-glow-blue" />
 
