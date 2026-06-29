@@ -14,6 +14,7 @@ export default function Nav() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
+  const toggleRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80)
@@ -24,7 +25,10 @@ export default function Nav() {
   useEffect(() => {
     if (!open) return
     const handler = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+      if (
+        menuRef.current && !menuRef.current.contains(e.target as Node) &&
+        toggleRef.current && !toggleRef.current.contains(e.target as Node)
+      ) {
         setOpen(false)
       }
     }
@@ -86,6 +90,7 @@ export default function Nav() {
             </a>
 
             <button
+              ref={toggleRef}
               className="md:hidden flex flex-col gap-[5px] p-2 -mr-2"
               onClick={() => setOpen((v) => !v)}
               aria-label="Menú"
