@@ -6,7 +6,7 @@ const services = [
   {
     eyebrow: "WHATSAPP",
     title: "Tu negocio\nresponde solo.",
-    body: "Tu negocio responde, agenda y vende por WhatsApp solo, sin que tú o tu equipo tengan que estar pendientes del teléfono todo el día.",
+    body: "Bot inteligente para WhatsApp que automatiza la atención a clientes, agenda citas, procesa pedidos y mucho más, adaptado a las necesidades de tu negocio.",
     icon: (
       <svg viewBox="0 0 200 200" fill="none" className="w-full h-full text-white">
         <rect x="52" y="18" width="96" height="164" rx="14" stroke="currentColor" strokeWidth="2.5"/>
