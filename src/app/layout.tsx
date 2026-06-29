@@ -18,9 +18,9 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "GAMZ Corp — Automatización con IA",
+  title: "GAMZ Corp | Automatización con IA",
   description:
-    "Construimos bots, automatizaciones y sistemas con IA que trabajan por ti — para que tú te enfoques en lo que importa.",
+    "Construimos bots, automatizaciones y sistemas con IA que trabajan por ti, para que tú te enfoques en lo que importa.",
   keywords: ["automatización", "inteligencia artificial", "bots", "WhatsApp", "México"],
 }
 

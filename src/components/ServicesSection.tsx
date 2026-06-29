@@ -6,7 +6,7 @@ const services = [
   {
     eyebrow: "WHATSAPP",
     title: "Tu negocio\nresponde solo.",
-    body: "Bot que agenda citas, contesta clientes y procesa pedidos en WhatsApp — sin que toques nada.",
+    body: "Bot que agenda citas, contesta clientes y procesa pedidos en WhatsApp. Sin que toques nada.",
     icon: (
       <svg viewBox="0 0 200 200" fill="none" className="w-56 h-56 md:w-72 md:h-72 text-white opacity-[0.07]">
         <rect x="52" y="18" width="96" height="164" rx="14" stroke="currentColor" strokeWidth="2.5"/>
@@ -23,9 +23,9 @@ const services = [
     ),
   },
   {
-    eyebrow: "TELEGRAM",
+    eyebrow: "TELEGRAM & WHATSAPP",
     title: "Análisis en\ntiempo real.",
-    body: "Análisis e IA directo en Telegram — para tu equipo interno o para tus clientes.",
+    body: "Análisis e IA directo por Telegram y WhatsApp. Para tu equipo interno o para tus clientes.",
     icon: (
       <svg viewBox="0 0 200 200" fill="none" className="w-56 h-56 md:w-72 md:h-72 text-white opacity-[0.07]">
         <line x1="100" y1="34" x2="100" y2="58" stroke="currentColor" strokeWidth="2.5"/>
@@ -46,7 +46,7 @@ const services = [
   {
     eyebrow: "INTELIGENCIA ARTIFICIAL",
     title: "IA que trabaja\nen tus procesos.",
-    body: "Claude y otros modelos integrados en tu operación real — no en una demo, en producción.",
+    body: "Claude y otros modelos integrados en tu operación real, no en demos sino en producción.",
     icon: (
       <svg viewBox="0 0 200 200" fill="none" className="w-56 h-56 md:w-72 md:h-72 text-white opacity-[0.07]">
         <circle cx="100" cy="100" r="20" stroke="currentColor" strokeWidth="2.5"/>
@@ -70,7 +70,7 @@ const services = [
   {
     eyebrow: "DESARROLLO WEB",
     title: "Tu presencia\ndigital, sin límites.",
-    body: "De landing page a sistema completo — construido a la medida, sin templates genéricos.",
+    body: "De landing page a sistema completo, construido a la medida y sin templates genéricos.",
     icon: (
       <svg viewBox="0 0 200 200" fill="none" className="w-56 h-56 md:w-72 md:h-72 text-white opacity-[0.07]">
         <rect x="16" y="38" width="168" height="116" rx="10" stroke="currentColor" strokeWidth="2.5"/>
@@ -90,7 +90,7 @@ const services = [
   {
     eyebrow: "MARKETING DIGITAL",
     title: "Más clientes,\ncon IA.",
-    body: "Estrategias de contenido, anuncios y posicionamiento potenciados con IA — para que tu negocio crezca en piloto automático.",
+    body: "Estrategias de contenido, anuncios y posicionamiento potenciados con IA para que tu negocio crezca solo.",
     icon: (
       <svg viewBox="0 0 200 200" fill="none" className="w-56 h-56 md:w-72 md:h-72 text-white opacity-[0.07]">
         <circle cx="100" cy="100" r="70" stroke="currentColor" strokeWidth="2.5" strokeDasharray="6 5"/>
@@ -108,7 +108,7 @@ const services = [
   {
     eyebrow: "PÁGINAS WEB",
     title: "Tu negocio,\nen internet.",
-    body: "Sitio profesional con pagos, panel de administración y todo listo para operar — sin depender de nadie más.",
+    body: "Sitio profesional con pagos, panel de administración y todo listo para operar sin depender de nadie más.",
     icon: (
       <svg viewBox="0 0 200 200" fill="none" className="w-56 h-56 md:w-72 md:h-72 text-white opacity-[0.07]">
         <rect x="18" y="28" width="164" height="118" rx="10" stroke="currentColor" strokeWidth="2.5"/>
