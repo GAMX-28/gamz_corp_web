@@ -51,15 +51,15 @@ export default function Nav() {
             : "bg-transparent"
         }`}
       >
-        <div className="grid grid-cols-3 items-center h-[52px] px-8 md:px-12 max-w-screen-xl mx-auto">
+        <div className="relative flex items-center justify-between h-[52px] px-8 md:px-12 max-w-screen-xl mx-auto">
           {/* Logo */}
           <a href="#" className="font-space-grotesk text-[19px] font-bold tracking-tight flex">
             <span className="text-white">GAMZ</span>
             <span style={{ color: "#86868B" }}>Corp</span>
           </a>
 
-          {/* Links – center */}
-          <ul className="hidden md:flex items-center justify-center gap-8 list-none">
+          {/* Links – centrados con absolute en desktop */}
+          <ul className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-8 list-none">
             {links.map((l) => (
               <li key={l.href}>
                 <a
@@ -73,8 +73,8 @@ export default function Nav() {
             ))}
           </ul>
 
-          {/* CTA – right */}
-          <div className="flex justify-end">
+          {/* CTA + Hamburger – siempre a la derecha */}
+          <div className="flex items-center justify-end">
             <a
               href="https://wa.me/525526849714"
               target="_blank"
@@ -84,7 +84,6 @@ export default function Nav() {
               WhatsApp ↗
             </a>
 
-            {/* Hamburger */}
             <button
               className="md:hidden flex flex-col gap-[5px] p-2 -mr-2"
               onClick={() => setOpen((v) => !v)}

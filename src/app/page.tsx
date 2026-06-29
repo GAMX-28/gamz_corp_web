@@ -258,7 +258,7 @@ export default function Home() {
           className="mx-auto mb-12 leading-relaxed"
           style={{ color: "#86868B", fontSize: "19px", maxWidth: "460px" }}
         >
-          Dime qué necesitas. Te respondo ese mismo día.
+          Cuéntanos qué necesitas. Te contactamos ese mismo día.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
