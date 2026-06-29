@@ -1,31 +1,26 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 const testimonios = [
   {
-    texto: "Antes perdíamos citas porque nadie contestaba el WhatsApp a tiempo, ahora el bot las agenda solo y manda recordatorios, bajamos las cancelaciones a la mitad",
+    texto: "Tenía una recepcionista dedicada solo a contestar WhatsApp y agendar citas, con el bot ya no necesitamos eso y las citas siguen llegando solas",
     nombre: "Dra. Mariana Torres",
     negocio: "Clínica Dental Sonrisa, Querétaro",
   },
   {
-    texto: "Mis clientes preguntan precios por WhatsApp todo el día, el bot ya contesta solo y hasta aparta mercancía, me ahorré contratar a alguien más",
+    texto: "Mis clientes preguntan precios a cualquier hora, antes me la pasaba pegado al teléfono, ahora el bot contesta y yo me entero solo cuando hay un pedido listo",
     nombre: "Vicente Ramírez",
     negocio: "Ferretería El Clavo, Texcoco",
   },
   {
-    texto: "Pusimos el bot un viernes, el sábado ya había tomado 12 pedidos para llevar sin que yo tocara el teléfono, no lo puedo creer todavía",
-    nombre: "Chef Rodrigo Serna",
-    negocio: "Fonda El Sazón, CDMX",
+    texto: "Tenemos 12 camiones y antes era un relajo saber quién iba a dónde, ahora el sistema nos da la ruta más corta y hemos bajado bastante en gasolina",
+    nombre: "Roberto Mendoza",
+    negocio: "Distribuidora Mendoza, Estado de México",
   },
 ]
 
 export default function TestimoniosSection() {
-  const cardsRef = useRef<HTMLDivElement[]>([])
-  const [grayColor, setGrayColor] = useState('#86868B')
-
-  useEffect(() => {
-    if (window.innerWidth < 768) setGrayColor('#a0a0a0')
-  }, [])
+  const itemsRef = useRef<HTMLDivElement[]>([])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -41,9 +36,7 @@ export default function TestimoniosSection() {
       },
       { threshold: 0.15 }
     )
-    cardsRef.current.forEach((card) => {
-      if (card) observer.observe(card)
-    })
+    itemsRef.current.forEach((el) => { if (el) observer.observe(el) })
     return () => observer.disconnect()
   }, [])
 
@@ -62,58 +55,49 @@ export default function TestimoniosSection() {
       >
         Resultados reales
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-10">
         {testimonios.map((t, i) => (
           <div
             key={i}
-            ref={(el) => { if (el) cardsRef.current[i] = el }}
-            className="rounded-2xl p-8 flex flex-col"
+            ref={(el) => { if (el) itemsRef.current[i] = el }}
             style={{
-              background: '#0D0D0D',
-              border: '1px solid rgba(255,255,255,0.06)',
               opacity: 0,
-              transform: 'translateY(40px)',
-              transition: `opacity 0.7s ease, transform 0.7s ease, border-color 0.3s ease`,
+              transform: 'translateY(32px)',
+              transition: `opacity 0.7s ease, transform 0.7s ease`,
               transitionDelay: `${i * 120}ms`,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(37,99,235,0.3)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'
             }}
           >
             <span
-              className="text-[48px] leading-none mb-2"
-              style={{ color: '#2563EB', fontFamily: 'Space Grotesk, sans-serif' }}
+              style={{
+                display: 'block',
+                color: '#2563EB',
+                fontFamily: 'Space Grotesk, sans-serif',
+                fontSize: '32px',
+                lineHeight: 1,
+                marginBottom: '16px',
+              }}
             >
               &ldquo;
             </span>
             <p
-              className="flex-1 mb-6"
               style={{
-                color: '#F0EDE8',
-                fontSize: '15px',
+                color: '#b0b0b0',
+                fontSize: '16px',
                 lineHeight: '1.7',
                 fontFamily: 'Inter, sans-serif',
+                marginBottom: '24px',
               }}
             >
               {t.texto}
             </p>
-            <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '16px' }}>
-              <p
-                className="text-white text-[13px] font-semibold"
-                style={{ fontFamily: 'Space Grotesk, sans-serif' }}
-              >
-                {t.nombre}
-              </p>
-              <p
-                className="mt-0.5"
-                style={{ color: grayColor, fontSize: '12px', fontFamily: 'Inter, sans-serif' }}
-              >
-                {t.negocio}
-              </p>
-            </div>
+            <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', marginBottom: '16px' }} />
+            <p style={{ color: '#ffffff', fontSize: '13px', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 600 }}>
+              {t.nombre}
+            </p>
+            <p style={{ color: '#86868B', fontSize: '12px', fontFamily: 'Inter, sans-serif' }}>
+              {t.negocio}
+            </p>
           </div>
         ))}
       </div>
