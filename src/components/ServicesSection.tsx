@@ -301,7 +301,7 @@ export default function ServicesSection({ className = "" }: Props) {
       </div>
 
       {/* ── Mobile: stacked ── */}
-      <div className="mobile-services md:hidden px-6 py-24 space-y-20 relative">
+      <div className="mobile-services md:hidden px-6 pt-24 pb-24 relative">
         {/* Warm ambient glow at top of mobile section */}
         <div
           aria-hidden
@@ -317,22 +317,24 @@ export default function ServicesSection({ className = "" }: Props) {
             zIndex: 0,
           }}
         />
-        <p className="relative z-10 text-[11px] font-semibold uppercase tracking-[0.22em] -mb-12" style={{ color: "#2563EB" }}>
+        <p className="relative z-10 text-[11px] font-semibold uppercase tracking-[0.22em] mb-5" style={{ color: "#2563EB" }}>
           SERVICIOS
         </p>
-        {services.map((s, i) => (
-          <div key={i} className="srv-mobile-item relative z-10">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-4" style={{ color: "#C4904A" }}>
-              {s.eyebrow}
-            </p>
-            <h2 className="font-space-grotesk text-[34px] font-bold leading-[1.06] tracking-tight text-white mb-4 whitespace-pre-line">
-              {s.title}
-            </h2>
-            <p className="text-[16px] leading-relaxed" style={{ color: "#86868B" }}>
-              {s.body}
-            </p>
-          </div>
-        ))}
+        <div className="space-y-20">
+          {services.map((s, i) => (
+            <div key={i} className="srv-mobile-item relative z-10">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-4" style={{ color: "#C4904A" }}>
+                {s.eyebrow}
+              </p>
+              <h2 className="font-space-grotesk text-[34px] font-bold leading-[1.06] tracking-tight text-white mb-4 whitespace-pre-line">
+                {s.title}
+              </h2>
+              <p className="text-[16px] leading-relaxed" style={{ color: "#86868B" }}>
+                {s.body}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )
