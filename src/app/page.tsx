@@ -83,7 +83,7 @@ export default function Home() {
       <div
         style={{
           height: "120px",
-          background: "linear-gradient(to bottom, rgba(140,60,0,0.12) 0%, transparent 100%)",
+          background: "linear-gradient(to bottom, rgba(180,80,0,0.35) 0%, transparent 100%)",
           marginTop: "-120px",
           position: "relative",
           zIndex: 10,
@@ -147,7 +147,7 @@ export default function Home() {
               className="font-space-grotesk font-extrabold text-white leading-none mb-3"
               style={{ fontSize: "clamp(64px,8vw,96px)" }}
             >
-              <AnimatedNumber target={3} suffix="+" />
+              <AnimatedNumber target={20} suffix="+" />
             </div>
             <p className="text-[15px] leading-relaxed" style={{ color: "#86868B" }}>
               Proyectos en producción.
