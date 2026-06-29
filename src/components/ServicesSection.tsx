@@ -246,7 +246,7 @@ export default function ServicesSection({ className = "" }: Props) {
             position: "absolute",
             inset: 0,
             background:
-              "radial-gradient(ellipse at 50% 15%, rgba(165,60,8,0.18) 0%, rgba(110,42,5,0.07) 48%, transparent 72%)",
+              "radial-gradient(ellipse at 50% 15%, rgba(191,132,74,0.16) 0%, rgba(164,130,73,0.06) 50%, transparent 74%)",
             pointerEvents: "none",
             zIndex: 0,
           }}
