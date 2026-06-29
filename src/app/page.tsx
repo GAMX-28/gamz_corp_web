@@ -69,6 +69,7 @@ export default function Home() {
       {/* Hero envuelto en z-10 para que quede sobre el bridge */}
       <div className="relative z-10">
         <AnimatedShaderHero
+          trustBadge={{ text: "Automatización con IA · Bots · Desarrollo web · México" }}
           headline={{ line1: "Tu negocio,", line2: "en piloto automático." }}
           subtitle="Automatizamos lo repetible para que tú te enfoques en crecer."
           buttons={{
