@@ -43,7 +43,7 @@ export default function TestimoniosSection() {
   }, [])
 
   return (
-    <section className="px-6 md:px-[10%] py-32 border-t border-white/[0.06]">
+    <section id="testimonios" className="px-6 md:px-[10%] py-32 border-t border-white/[0.06]">
       <p
         className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-6"
         style={{ color: '#2563EB', fontFamily: 'Space Grotesk, sans-serif' }}
