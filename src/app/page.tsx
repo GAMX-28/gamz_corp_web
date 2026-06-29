@@ -69,9 +69,8 @@ export default function Home() {
       {/* Hero envuelto en z-10 para que quede sobre el bridge */}
       <div className="relative z-10">
         <AnimatedShaderHero
-          trustBadge={{ text: "Automatización con IA · Bots · Desarrollo web · México" }}
           headline={{ line1: "Tu negocio,", line2: "en piloto automático." }}
-          subtitle="Automatizamos lo repetible para que tú te enfoques en crecer."
+          subtitle="GAMZ Corp construye bots, automatizaciones y páginas web para negocios en México. Si tienes clientes sin atender, procesos manuales o simplemente no tienes presencia en internet, nosotros lo resolvemos."
           buttons={{
             primary: {
               text: "Ver servicios",
@@ -127,13 +126,6 @@ export default function Home() {
               >
                 {p.num}
               </div>
-              {/* Badge */}
-              <span
-                className="inline-block text-[11px] font-semibold px-3 py-1 rounded-full mb-4"
-                style={{ background: "rgba(52,199,89,0.1)", color: "#34C759" }}
-              >
-                En producción
-              </span>
               <h3 className="font-space-grotesk text-[22px] font-bold text-white leading-snug mb-3">
                 {p.title}
               </h3>

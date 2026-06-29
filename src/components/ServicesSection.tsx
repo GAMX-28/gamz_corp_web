@@ -88,6 +88,24 @@ const services = [
     ),
   },
   {
+    eyebrow: "MARKETING DIGITAL",
+    title: "Más clientes,\ncon IA.",
+    body: "Estrategias de contenido, anuncios y posicionamiento potenciados con IA — para que tu negocio crezca en piloto automático.",
+    icon: (
+      <svg viewBox="0 0 200 200" fill="none" className="w-56 h-56 md:w-72 md:h-72 text-white opacity-[0.07]">
+        <circle cx="100" cy="100" r="70" stroke="currentColor" strokeWidth="2.5" strokeDasharray="6 5"/>
+        <circle cx="100" cy="100" r="42" stroke="currentColor" strokeWidth="2"/>
+        <circle cx="100" cy="100" r="14" stroke="currentColor" strokeWidth="2.5"/>
+        <line x1="100" y1="30" x2="100" y2="58" stroke="currentColor" strokeWidth="2"/>
+        <line x1="100" y1="142" x2="100" y2="170" stroke="currentColor" strokeWidth="2"/>
+        <line x1="30" y1="100" x2="58" y2="100" stroke="currentColor" strokeWidth="2"/>
+        <line x1="142" y1="100" x2="170" y2="100" stroke="currentColor" strokeWidth="2"/>
+        <polyline points="60,60 80,90 100,72 120,108 140,88" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+        <circle cx="140" cy="88" r="5" fill="currentColor"/>
+      </svg>
+    ),
+  },
+  {
     eyebrow: "PÁGINAS WEB",
     title: "Tu negocio,\nen internet.",
     body: "Sitio profesional con pagos, panel de administración y todo listo para operar — sin depender de nadie más.",
@@ -192,12 +210,12 @@ export default function ServicesSection({ className = "" }: Props) {
         scrollTrigger: {
           trigger: wrapper,
           start: "top top",
-          end: "+=400%",
+          end: "+=500%",
           pin: sticky,
           scrub: 1,
           anticipatePin: 1,
           onUpdate: (self) => {
-            const idx = Math.min(4, Math.floor(self.progress * 5))
+            const idx = Math.min(5, Math.floor(self.progress * 6))
             if (idx !== activeIndexRef.current) {
               activeIndexRef.current = idx
               dots?.forEach((d, i) => {
@@ -211,7 +229,7 @@ export default function ServicesSection({ className = "" }: Props) {
       })
 
       const dur = 0.18
-      ;[0, 1, 2, 3].forEach((i) => {
+      ;[0, 1, 2, 3, 4].forEach((i) => {
         const at = i + 0.78
         tl.to(states[i], { opacity: 0, y: -22, duration: dur }, at)
           .to(icons[i], { opacity: 0, duration: dur }, at)
