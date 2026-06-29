@@ -7,29 +7,22 @@ import TestimoniosSection from "@/components/TestimoniosSection"
 import AnimatedShaderHero from "@/components/ui/animated-shader-hero"
 import AnimatedNumber from "@/components/AnimatedNumber"
 
-// ── Stack marquee ─────────────────────────────────────────────────────────────
-const stackRow1 = ["Node.js", "Supabase", "Claude API", "MercadoPago", "Twilio", "Railway", "Next.js", "TypeScript"]
-const stackRow2 = ["Telegram API", "WhatsApp API", "PostgreSQL", "Fly.io", "Netlify", "React", "Vercel", "Zoho"]
-
 // ── Projects ──────────────────────────────────────────────────────────────────
 const projects = [
   {
     num: "01",
     title: "Sistema de citas automatizado",
-    desc: "Bot de WhatsApp que reserva, recuerda y confirma citas solo. El negocio opera sin operador humano.",
-    stack: "Node.js, Supabase, Twilio, Railway",
+    desc: "Asistente virtual que gestiona reservas, envía recordatorios y confirma citas por WhatsApp, disponible las 24 horas sin intervención humana.",
   },
   {
     num: "02",
     title: "Bot de análisis con IA",
-    desc: "Análisis deportivo en tiempo real por Telegram. Claude AI procesa los datos, MercadoPago cobra.",
-    stack: "Claude API, Telegram, MercadoPago, Supabase",
+    desc: "Análisis deportivo en tiempo real por Telegram, con IA que procesa los datos y pagos integrados para monetizar el servicio.",
   },
   {
     num: "03",
     title: "Páginas web profesionales",
-    desc: "Sitios para negocios mexicanos: desde landing page hasta plataforma con pagos, auth y panel de admin.",
-    stack: "Next.js, React, Tailwind, Vercel",
+    desc: "Sitios web a la medida del negocio, desde landing pages hasta plataformas completas con pagos, autenticación y panel de administración.",
   },
   {
     num: "04",
@@ -95,7 +88,7 @@ export default function Home() {
       <div className="relative z-10">
         <AnimatedShaderHero
           headline={{ line1: "Tu negocio,", line2: "en piloto automático." }}
-          subtitle="GAMZ Corp construye bots, automatizaciones y páginas web para negocios en México. Si tienes clientes sin atender, procesos manuales o simplemente no tienes presencia en internet, nosotros lo resolvemos."
+          subtitle="Diseñamos soluciones digitales para negocios en México, desde bots inteligentes hasta plataformas completas, adaptadas exactamente a lo que tu empresa necesita."
           buttons={{
             primary: {
               text: "Ver servicios",
@@ -145,9 +138,11 @@ export default function Home() {
               <p className="text-[15px] leading-relaxed mb-4" style={{ color: grayColor }}>
                 {p.desc}
               </p>
-              <p className="text-[12px] uppercase tracking-[0.1em]" style={{ color: "#3D3D3F" }}>
-                {p.stack}
-              </p>
+              {p.stack && (
+                <p className="text-[12px] uppercase tracking-[0.1em]" style={{ color: "#3D3D3F" }}>
+                  {p.stack}
+                </p>
+              )}
             </div>
           ))}
         </div>
@@ -191,52 +186,6 @@ export default function Home() {
             <p className="text-[15px] leading-relaxed" style={{ color: grayColor }}>
               Disponible siempre.
             </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Stack marquee ── */}
-      <section id="stack" className="section-glow-subtle py-20 border-t border-white/[0.06] overflow-hidden">
-        <p
-          className="text-center text-[11px] font-semibold uppercase tracking-[0.22em] mb-10"
-          style={{ color: grayColor }}
-        >
-          Stack tecnológico
-        </p>
-
-        {/* Row 1 — left */}
-        <div className="marquee-row flex mb-3">
-          <div className="flex animate-marquee-left whitespace-nowrap">
-            {[...stackRow1, ...stackRow1].map((t, i) => (
-              <span
-                key={i}
-                className="text-[13px] uppercase font-medium"
-                style={{ color: "#3D3D3F", letterSpacing: "0.1em", padding: "0 24px" }}
-              >
-                {t}
-                {i < stackRow1.length * 2 - 1 && (
-                  <span style={{ marginLeft: "24px" }}>·</span>
-                )}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Row 2 — right */}
-        <div className="marquee-row flex">
-          <div className="flex animate-marquee-right whitespace-nowrap">
-            {[...stackRow2, ...stackRow2].map((t, i) => (
-              <span
-                key={i}
-                className="text-[13px] uppercase font-medium"
-                style={{ color: "#3D3D3F", letterSpacing: "0.1em", padding: "0 24px" }}
-              >
-                {t}
-                {i < stackRow2.length * 2 - 1 && (
-                  <span style={{ marginLeft: "24px" }}>·</span>
-                )}
-              </span>
-            ))}
           </div>
         </div>
       </section>

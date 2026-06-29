@@ -6,7 +6,7 @@ const services = [
   {
     eyebrow: "WHATSAPP",
     title: "Tu negocio\nresponde solo.",
-    body: "Bot que agenda citas, contesta clientes y procesa pedidos en WhatsApp. Sin que toques nada.",
+    body: "Bot inteligente que automatiza la atención a clientes, agenda citas, procesa pedidos y mucho más, adaptado a las necesidades de tu negocio.",
     icon: (
       <svg viewBox="0 0 200 200" fill="none" className="w-full h-full text-white">
         <rect x="52" y="18" width="96" height="164" rx="14" stroke="currentColor" strokeWidth="2.5"/>
@@ -25,7 +25,7 @@ const services = [
   {
     eyebrow: "TELEGRAM & WHATSAPP",
     title: "Análisis en\ntiempo real.",
-    body: "Análisis e IA directo por Telegram y WhatsApp. Para tu equipo interno o para tus clientes.",
+    body: "Automatizaciones e IA integrada directamente en Telegram para tu equipo o tus clientes.",
     icon: (
       <svg viewBox="0 0 200 200" fill="none" className="w-full h-full text-white">
         <line x1="100" y1="34" x2="100" y2="58" stroke="currentColor" strokeWidth="2.5"/>
@@ -46,7 +46,7 @@ const services = [
   {
     eyebrow: "INTELIGENCIA ARTIFICIAL",
     title: "IA que trabaja\nen tus procesos.",
-    body: "Claude y otros modelos integrados en tu operación real, no en demos sino en producción.",
+    body: "Integramos IA en los procesos de tu empresa para que trabajen más inteligente y generen mejores resultados.",
     icon: (
       <svg viewBox="0 0 200 200" fill="none" className="w-full h-full text-white">
         <circle cx="100" cy="100" r="20" stroke="currentColor" strokeWidth="2.5"/>
@@ -70,7 +70,7 @@ const services = [
   {
     eyebrow: "DESARROLLO WEB",
     title: "Tu presencia\ndigital, sin límites.",
-    body: "De landing page a sistema completo, construido a la medida y sin templates genéricos.",
+    body: "Creamos sitios web a la medida de tu negocio, desde landing pages hasta plataformas completas con pagos, panel de administración y gestión de usuarios.",
     icon: (
       <svg viewBox="0 0 200 200" fill="none" className="w-full h-full text-white">
         <rect x="16" y="38" width="168" height="116" rx="10" stroke="currentColor" strokeWidth="2.5"/>
@@ -128,7 +128,7 @@ const services = [
   {
     eyebrow: "PÁGINAS WEB",
     title: "Tu negocio,\nen internet.",
-    body: "Sitio profesional con pagos, panel de administración y todo listo para operar sin depender de nadie más.",
+    body: "Sitio profesional diseñado para impulsar el crecimiento de tu empresa, con todo lo que necesitas para operar en internet desde el primer día.",
     icon: (
       <svg viewBox="0 0 200 200" fill="none" className="w-full h-full text-white">
         <rect x="18" y="28" width="164" height="118" rx="10" stroke="currentColor" strokeWidth="2.5"/>
@@ -165,9 +165,21 @@ export default function ServicesSection({ className = "" }: Props) {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const [activeIndex, setActiveIndex] = useState(0)
   const [grayColor, setGrayColor] = useState('#86868B')
+  const [inView, setInView] = useState(false)
 
   useEffect(() => {
     if (window.innerWidth < 768) setGrayColor('#a0a0a0')
+  }, [])
+
+  useEffect(() => {
+    const el = wrapperRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
   }, [])
 
   useEffect(() => {
@@ -288,20 +300,6 @@ export default function ServicesSection({ className = "" }: Props) {
             ))}
           </div>
 
-          {/* Dots — horizontal bottom */}
-          <div className="absolute bottom-8 flex flex-row gap-2 items-center">
-            {services.map((_, i) => (
-              <div
-                key={i}
-                className="rounded-full bg-white transition-all duration-300"
-                style={{
-                  width: i === activeIndex ? "8px" : "6px",
-                  height: i === activeIndex ? "8px" : "6px",
-                  opacity: i === activeIndex ? 1 : 0.3,
-                }}
-              />
-            ))}
-          </div>
         </div>
 
         {/* ── Desktop layout ── */}
@@ -360,20 +358,29 @@ export default function ServicesSection({ className = "" }: Props) {
             ))}
           </div>
 
-          {/* Dots — vertical right */}
-          <div className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-3 items-center z-10">
-            {services.map((_, i) => (
-              <div
-                key={i}
-                className="rounded-full bg-white transition-all duration-300"
-                style={{
-                  width: i === activeIndex ? "10px" : "4px",
-                  height: i === activeIndex ? "10px" : "4px",
-                  opacity: i === activeIndex ? 1 : 0.25,
-                }}
-              />
-            ))}
-          </div>
+        </div>
+
+        {/* Dots — fixed right side, same on mobile and desktop */}
+        <div
+          className="fixed right-4 top-1/2 -translate-y-1/2 flex flex-col gap-2 items-center z-20 md:absolute md:right-8 md:gap-3"
+          style={{
+            opacity: inView ? 1 : 0,
+            pointerEvents: inView ? "auto" : "none",
+            transition: "opacity 0.3s ease",
+          }}
+        >
+          {services.map((_, i) => (
+            <div
+              key={i}
+              className="rounded-full"
+              style={{
+                width: i === activeIndex ? "8px" : "6px",
+                height: i === activeIndex ? "8px" : "6px",
+                backgroundColor: i === activeIndex ? "#ffffff" : "rgba(255,255,255,0.25)",
+                transition: "width 0.3s ease, height 0.3s ease, background-color 0.3s ease",
+              }}
+            />
+          ))}
         </div>
       </div>
     </section>

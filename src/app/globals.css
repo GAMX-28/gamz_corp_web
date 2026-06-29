@@ -203,9 +203,13 @@
 }
 
 /* Mobile brightness & contrast fixes */
+html, body {
+  background: #111111;
+}
+
 @media (max-width: 768px) {
-  body {
-    background: #0a0a0a;
+  html, body {
+    background: #111111 !important;
   }
 
   section {
@@ -214,42 +218,26 @@
 
   #servicios {
     background: radial-gradient(
-      ellipse at 50% 20%,
-      rgba(100, 40, 0, 0.2) 0%,
-      transparent 70%
-    );
+      ellipse at 50% 10%,
+      rgba(120, 50, 0, 0.35) 0%,
+      rgba(17,17,17,1) 70%
+    ) !important;
   }
 
-  #clientes {
+  #clientes, #proyectos, #contacto {
     background: radial-gradient(
       ellipse at 50% 0%,
-      rgba(37, 99, 235, 0.06) 0%,
-      transparent 60%
-    );
+      rgba(37, 99, 235, 0.12) 0%,
+      rgba(17,17,17,1) 65%
+    ) !important;
   }
 
-  #proyectos {
-    background: radial-gradient(
-      ellipse at 50% 0%,
-      rgba(37, 99, 235, 0.05) 0%,
-      transparent 60%
-    );
+  p, span {
+    color: #b0b0b0;
   }
 
-  #stack {
-    background: radial-gradient(
-      ellipse at 50% 50%,
-      rgba(37, 99, 235, 0.04) 0%,
-      transparent 60%
-    );
-  }
-
-  #contacto {
-    background: radial-gradient(
-      ellipse at 50% 0%,
-      rgba(37, 99, 235, 0.06) 0%,
-      transparent 60%
-    );
+  h1, h2, h3, h4 {
+    color: #ffffff !important;
   }
 
   .text-\[\#86868B\] {
