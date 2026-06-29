@@ -1,20 +1,24 @@
 'use client'
 import { useEffect } from 'react'
-import { usePathname } from 'next/navigation'
 
 export function ScrollToTop() {
-  const pathname = usePathname()
-
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' })
-  }, [pathname])
+    if (typeof window === 'undefined') return
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      if ('scrollRestoration' in window.history) {
-        window.history.scrollRestoration = 'manual'
-      }
+    // Deshabilita la restauración de scroll del browser
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual'
     }
+
+    // Fuerza scroll al top inmediatamente
+    window.scrollTo(0, 0)
+
+    // Segundo intento por si el browser lo sobreescribe
+    const timeout = setTimeout(() => {
+      window.scrollTo(0, 0)
+    }, 0)
+
+    return () => clearTimeout(timeout)
   }, [])
 
   return null
