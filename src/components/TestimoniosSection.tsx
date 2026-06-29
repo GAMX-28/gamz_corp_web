@@ -57,10 +57,10 @@ export default function TestimoniosSection() {
       </p>
       <h2
         data-reveal
-        className="font-space-grotesk text-[clamp(32px,4vw,52px)] font-bold leading-[1.08] tracking-tight mb-20 max-w-xl"
-        style={{ color: '#ffffff' }}
+        className="text-[clamp(32px,4vw,52px)] leading-[1.08] tracking-tight mb-20 max-w-xl"
+        style={{ color: '#ffffff', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 800 }}
       >
-        Resultados reales.
+        Resultados reales
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {testimonios.map((t, i) => (

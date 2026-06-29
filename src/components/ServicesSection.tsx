@@ -311,7 +311,7 @@ export default function ServicesSection({ className = "" }: Props) {
               flexDirection: "column",
               gap: "8px",
               alignItems: "center",
-              zIndex: 20,
+              zIndex: 50,
             }}
           >
             {services.map((_, i) => (
@@ -386,7 +386,7 @@ export default function ServicesSection({ className = "" }: Props) {
           </div>
 
           {/* Dots — lateral derecho desktop */}
-          <div className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-2 items-center z-10">
+          <div style={{ position: "fixed", right: "32px", top: "50%", transform: "translateY(-50%)", display: "flex", flexDirection: "column", gap: "8px", alignItems: "center", zIndex: 50 }}>
             {services.map((_, i) => (
               <div
                 key={i}
