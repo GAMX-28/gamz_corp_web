@@ -6,7 +6,7 @@ const services = [
   {
     eyebrow: "WHATSAPP",
     title: "Tu negocio\nresponde solo.",
-    body: "Bots que agendan citas, contestan preguntas y procesan pedidos en WhatsApp — sin que levantes un dedo.",
+    body: "Bot que agenda citas, contesta clientes y procesa pedidos en WhatsApp — sin que toques nada.",
     icon: (
       <svg viewBox="0 0 200 200" fill="none" className="w-56 h-56 md:w-72 md:h-72 text-white opacity-[0.07]">
         <rect x="52" y="18" width="96" height="164" rx="14" stroke="currentColor" strokeWidth="2.5"/>
@@ -25,7 +25,7 @@ const services = [
   {
     eyebrow: "TELEGRAM",
     title: "Análisis en\ntiempo real.",
-    body: "Automatizaciones e IA integrada directamente en Telegram para tu equipo o tus clientes.",
+    body: "Análisis e IA directo en Telegram — para tu equipo interno o para tus clientes.",
     icon: (
       <svg viewBox="0 0 200 200" fill="none" className="w-56 h-56 md:w-72 md:h-72 text-white opacity-[0.07]">
         <line x1="100" y1="34" x2="100" y2="58" stroke="currentColor" strokeWidth="2.5"/>
@@ -46,7 +46,7 @@ const services = [
   {
     eyebrow: "INTELIGENCIA ARTIFICIAL",
     title: "IA que trabaja\nen tus procesos.",
-    body: "Integro modelos como Claude directamente en el flujo operativo de tu empresa.",
+    body: "Claude y otros modelos integrados en tu operación real — no en una demo, en producción.",
     icon: (
       <svg viewBox="0 0 200 200" fill="none" className="w-56 h-56 md:w-72 md:h-72 text-white opacity-[0.07]">
         <circle cx="100" cy="100" r="20" stroke="currentColor" strokeWidth="2.5"/>
@@ -70,7 +70,7 @@ const services = [
   {
     eyebrow: "DESARROLLO WEB",
     title: "Tu presencia\ndigital, sin límites.",
-    body: "Desde landing pages hasta sistemas completos — diseñados exactamente para tu negocio.",
+    body: "De landing page a sistema completo — construido a la medida, sin templates genéricos.",
     icon: (
       <svg viewBox="0 0 200 200" fill="none" className="w-56 h-56 md:w-72 md:h-72 text-white opacity-[0.07]">
         <rect x="16" y="38" width="168" height="116" rx="10" stroke="currentColor" strokeWidth="2.5"/>
@@ -90,7 +90,7 @@ const services = [
   {
     eyebrow: "PÁGINAS WEB",
     title: "Tu negocio,\nen internet.",
-    body: "Diseño y desarrollo de sitios web profesionales para cualquier tipo de negocio — con pagos integrados, panel de administración y todo lo que necesitas.",
+    body: "Sitio profesional con pagos, panel de administración y todo listo para operar — sin depender de nadie más.",
     icon: (
       <svg viewBox="0 0 200 200" fill="none" className="w-56 h-56 md:w-72 md:h-72 text-white opacity-[0.07]">
         {/* Monitor outer frame */}

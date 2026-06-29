@@ -15,19 +15,19 @@ const projects = [
   {
     num: "01",
     title: "Sistema de citas automatizado",
-    desc: "WhatsApp bot con reservas automáticas, recordatorios 24h y panel de administración. Sin operador humano.",
+    desc: "Bot de WhatsApp que reserva, recuerda y confirma citas solo. El negocio opera sin operador humano.",
     stack: "Node.js · Supabase · Twilio · Railway",
   },
   {
     num: "02",
     title: "Bot de análisis con IA",
-    desc: "Análisis deportivo en tiempo real con Claude AI y pagos integrados vía MercadoPago.",
+    desc: "Análisis deportivo en tiempo real por Telegram. Claude AI procesa los datos, MercadoPago cobra.",
     stack: "Claude API · Telegram · MercadoPago · Supabase",
   },
   {
     num: "03",
     title: "Páginas web profesionales",
-    desc: "Diseño y desarrollo de sitios web para negocios mexicanos — desde landing pages hasta plataformas con autenticación, pagos y panel de administración.",
+    desc: "Sitios para negocios mexicanos — desde landing page hasta plataforma con pagos, auth y panel de admin.",
     stack: "Next.js · React · Tailwind · Vercel",
   },
 ]
@@ -60,13 +60,26 @@ export default function Home() {
   }, [])
 
   return (
-    <main className="bg-black min-h-screen">
+    <main
+      className="min-h-screen relative"
+      style={{
+        background: `
+          linear-gradient(
+            to bottom,
+            rgba(170,70,0,0.32) 0%,
+            rgba(110,45,0,0.14) 12%,
+            rgba(60,22,0,0.06) 28%,
+            rgba(20,8,0,0.02) 48%,
+            #000 65%
+          )`,
+      }}
+    >
       <Nav />
 
       {/* ── Hero ── */}
       <AnimatedShaderHero
         headline={{ line1: "Tu negocio,", line2: "en piloto automático." }}
-        subtitle="Construimos bots, automatizaciones y sistemas con IA que trabajan por ti — para que tú te enfoques en lo que importa."
+        subtitle="Automatizamos lo repetible para que tú te enfoques en crecer."
         buttons={{
           primary: {
             text: "Ver servicios",
@@ -76,18 +89,6 @@ export default function Home() {
             text: "WhatsApp ↗",
             onClick: () => window.open("https://wa.me/525526849714", "_blank"),
           },
-        }}
-      />
-
-      {/* Hero → Servicios transition */}
-      <div
-        style={{
-          height: "120px",
-          background: "linear-gradient(to bottom, rgba(180,80,0,0.35) 0%, transparent 100%)",
-          marginTop: "-120px",
-          position: "relative",
-          zIndex: 10,
-          pointerEvents: "none",
         }}
       />
 
@@ -248,7 +249,7 @@ export default function Home() {
           className="mx-auto mb-12 leading-relaxed"
           style={{ color: "#86868B", fontSize: "19px", maxWidth: "460px" }}
         >
-          Cuéntame qué necesitas. Sin rodeos. Te respondo ese mismo día.
+          Dime qué necesitas. Te respondo ese mismo día.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
