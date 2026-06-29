@@ -103,21 +103,6 @@ export default function Home() {
         />
       </div>
 
-      {/* Color bridge hero → servicios — radial para que no se vea como bloque */}
-      <div
-        aria-hidden
-        style={{
-          position: "absolute",
-          top: "65vh",
-          left: 0,
-          right: 0,
-          height: "85vh",
-          background:
-            "radial-gradient(ellipse 110% 50% at 50% 32%, rgba(210,108,48,0.58) 0%, rgba(182,92,38,0.22) 55%, transparent 100%)",
-          pointerEvents: "none",
-          zIndex: 5,
-        }}
-      />
 
       {/* ── Servicios ── */}
       <ServicesSection className="section-glow-blue" />
