@@ -240,13 +240,6 @@ export default function ServicesSection({ className = "" }: Props) {
           SERVICIOS
         </p>
       </div>
-      {/* Mobile section label */}
-      <div className="md:hidden px-6 pt-20 pb-0">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.22em]" style={{ color: "#2563EB" }}>
-          SERVICIOS
-        </p>
-      </div>
-
       {/* ── Desktop: sticky scroll ── */}
       <div
         ref={stickyRef}
@@ -324,6 +317,9 @@ export default function ServicesSection({ className = "" }: Props) {
             zIndex: 0,
           }}
         />
+        <p className="relative z-10 text-[11px] font-semibold uppercase tracking-[0.22em] -mb-12" style={{ color: "#2563EB" }}>
+          SERVICIOS
+        </p>
         {services.map((s, i) => (
           <div key={i} className="srv-mobile-item relative z-10">
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-4" style={{ color: "#C4904A" }}>
