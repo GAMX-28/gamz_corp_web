@@ -236,7 +236,7 @@ export default function ServicesSection({ className = "" }: Props) {
 
       {/* ── Section label ── */}
       <div className="hidden md:block absolute top-12 left-[10%] z-20">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.22em]" style={{ color: "#2563EB" }}>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.22em]" style={{ color: "#C4904A" }}>
           SERVICIOS
         </p>
       </div>
@@ -262,7 +262,7 @@ export default function ServicesSection({ className = "" }: Props) {
         <div ref={statesRef} className="relative z-10 flex-[0_0_42%] h-[360px]">
           {services.map((s, i) => (
             <div key={i} className="srv-state absolute inset-0 flex flex-col justify-center">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-5" style={{ color: "#C4904A" }}>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-5" style={{ color: "#2563EB" }}>
                 {s.eyebrow}
               </p>
               <h2 className="font-space-grotesk text-[clamp(36px,3.5vw,52px)] font-bold leading-[1.06] tracking-tight text-white mb-5 whitespace-pre-line">
@@ -301,7 +301,7 @@ export default function ServicesSection({ className = "" }: Props) {
       </div>
 
       {/* ── Mobile: stacked ── */}
-      <div className="mobile-services md:hidden px-6 pt-24 pb-24 relative">
+      <div className="mobile-services md:hidden px-6 pt-16 pb-24 relative">
         {/* Warm ambient glow at top of mobile section */}
         <div
           aria-hidden
@@ -317,13 +317,13 @@ export default function ServicesSection({ className = "" }: Props) {
             zIndex: 0,
           }}
         />
-        <p className="relative z-10 text-[11px] font-semibold uppercase tracking-[0.22em] mb-5" style={{ color: "#2563EB" }}>
+        <p className="relative z-10 text-[11px] font-semibold uppercase tracking-[0.22em] mb-5" style={{ color: "#C4904A" }}>
           SERVICIOS
         </p>
         <div className="space-y-20">
           {services.map((s, i) => (
             <div key={i} className="srv-mobile-item relative z-10">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-4" style={{ color: "#C4904A" }}>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-4" style={{ color: "#2563EB" }}>
                 {s.eyebrow}
               </p>
               <h2 className="font-space-grotesk text-[34px] font-bold leading-[1.06] tracking-tight text-white mb-4 whitespace-pre-line">
