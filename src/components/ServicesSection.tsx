@@ -87,9 +87,54 @@ const services = [
       </svg>
     ),
   },
+  {
+    eyebrow: "PÁGINAS WEB",
+    title: "Tu negocio,\nen internet.",
+    body: "Diseño y desarrollo de sitios web profesionales para cualquier tipo de negocio — con pagos integrados, panel de administración y todo lo que necesitas.",
+    icon: (
+      <svg viewBox="0 0 200 200" fill="none" className="w-56 h-56 md:w-72 md:h-72 text-white opacity-[0.07]">
+        {/* Monitor outer frame */}
+        <rect x="18" y="28" width="164" height="118" rx="10" stroke="currentColor" strokeWidth="2.5"/>
+        {/* Browser chrome bar */}
+        <rect x="28" y="38" width="144" height="18" rx="4" stroke="currentColor" strokeWidth="1.5"/>
+        {/* Traffic lights */}
+        <circle cx="40" cy="47" r="3" stroke="currentColor" strokeWidth="1.5"/>
+        <circle cx="52" cy="47" r="3" stroke="currentColor" strokeWidth="1.5"/>
+        <circle cx="64" cy="47" r="3" stroke="currentColor" strokeWidth="1.5"/>
+        {/* URL bar */}
+        <rect x="76" y="42" width="86" height="10" rx="3" stroke="currentColor" strokeWidth="1.5"/>
+        {/* Nav bar in page */}
+        <line x1="28" y1="68" x2="172" y2="68" stroke="currentColor" strokeWidth="1.5" opacity="0.5"/>
+        {/* Navbar items */}
+        <line x1="38" y1="62" x2="58" y2="62" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        <line x1="68" y1="62" x2="82" y2="62" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+        <line x1="88" y1="62" x2="102" y2="62" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+        {/* Hero block */}
+        <rect x="38" y="76" width="72" height="40" rx="4" stroke="currentColor" strokeWidth="1.5"/>
+        {/* Hero text lines */}
+        <line x1="44" y1="84" x2="80" y2="84" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        <line x1="44" y1="92" x2="96" y2="92" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+        <line x1="44" y1="100" x2="72" y2="100" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+        {/* CTA button */}
+        <rect x="44" y="106" width="28" height="8" rx="4" stroke="currentColor" strokeWidth="1.5"/>
+        {/* Sidebar card */}
+        <rect x="120" y="76" width="44" height="40" rx="4" stroke="currentColor" strokeWidth="1.5"/>
+        <line x1="128" y1="86" x2="156" y2="86" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+        <line x1="128" y1="94" x2="148" y2="94" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+        <line x1="128" y1="102" x2="152" y2="102" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+        {/* Monitor stand */}
+        <line x1="100" y1="146" x2="100" y2="166" stroke="currentColor" strokeWidth="2.5"/>
+        <line x1="72" y1="166" x2="128" y2="166" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
 ]
 
-export default function ServicesSection() {
+interface Props {
+  className?: string
+}
+
+export default function ServicesSection({ className = "" }: Props) {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const stickyRef = useRef<HTMLDivElement>(null)
   const statesRef = useRef<HTMLDivElement>(null)
@@ -101,7 +146,6 @@ export default function ServicesSection() {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
     if (reduced) return
 
-    let gsapModule: typeof import("gsap") | null = null
     let ScrollTriggerModule: typeof import("gsap/ScrollTrigger").ScrollTrigger | null = null
 
     const init = async () => {
@@ -112,7 +156,6 @@ export default function ServicesSection() {
       const gsap = gsapPkg.gsap
       const ScrollTrigger = stPkg.ScrollTrigger
       gsap.registerPlugin(ScrollTrigger)
-      gsapModule = gsapPkg
       ScrollTriggerModule = ScrollTrigger
 
       const mq = gsap.matchMedia()
@@ -129,7 +172,6 @@ export default function ServicesSection() {
         const icons = iconsEl.querySelectorAll<HTMLElement>(".srv-icon")
         const dots = dotsEl?.querySelectorAll<HTMLElement>(".srv-dot")
 
-        // Initial: first visible, rest hidden
         gsap.set([...states].slice(1), { opacity: 0, y: 22 })
         gsap.set([...icons].slice(1), { opacity: 0 })
 
@@ -137,12 +179,12 @@ export default function ServicesSection() {
           scrollTrigger: {
             trigger: wrapper,
             start: "top top",
-            end: "+=300%",
+            end: "+=400%",
             pin: sticky,
             scrub: 1,
             anticipatePin: 1,
             onUpdate: (self) => {
-              const idx = Math.min(3, Math.floor(self.progress * 4))
+              const idx = Math.min(4, Math.floor(self.progress * 5))
               if (idx !== activeIndexRef.current) {
                 activeIndexRef.current = idx
                 dots?.forEach((d, i) => {
@@ -156,7 +198,7 @@ export default function ServicesSection() {
         })
 
         const dur = 0.18
-        ;[0, 1, 2].forEach((i) => {
+        ;[0, 1, 2, 3].forEach((i) => {
           const at = i + 0.78
           tl.to(states[i], { opacity: 0, y: -22, duration: dur }, at)
             .to(icons[i], { opacity: 0, duration: dur }, at)
@@ -189,7 +231,7 @@ export default function ServicesSection() {
   }, [])
 
   return (
-    <section id="servicios" ref={wrapperRef} className="relative">
+    <section id="servicios" ref={wrapperRef} className={`relative ${className}`}>
       {/* ── Desktop: sticky scroll ── */}
       <div
         ref={stickyRef}
@@ -198,19 +240,11 @@ export default function ServicesSection() {
         {/* Text states */}
         <div ref={statesRef} className="relative flex-[0_0_42%] h-[360px]">
           {services.map((s, i) => (
-            <div
-              key={i}
-              className="srv-state absolute inset-0 flex flex-col justify-center"
-            >
-              <p
-                className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-5"
-                style={{ color: "#2563EB" }}
-              >
+            <div key={i} className="srv-state absolute inset-0 flex flex-col justify-center">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-5" style={{ color: "#2563EB" }}>
                 {s.eyebrow}
               </p>
-              <h2
-                className="font-space-grotesk text-[clamp(36px,3.5vw,52px)] font-bold leading-[1.06] tracking-tight text-white mb-5 whitespace-pre-line"
-              >
+              <h2 className="font-space-grotesk text-[clamp(36px,3.5vw,52px)] font-bold leading-[1.06] tracking-tight text-white mb-5 whitespace-pre-line">
                 {s.title}
               </h2>
               <p className="text-[17px] leading-relaxed max-w-[360px]" style={{ color: "#86868B" }}>
