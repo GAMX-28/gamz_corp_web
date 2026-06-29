@@ -106,6 +106,26 @@ const services = [
     ),
   },
   {
+    eyebrow: "RUTAS CON IA",
+    title: "Menos gasolina,\nmás entregas.",
+    body: "Optimizamos las rutas de tus transportistas con IA. Menos combustible, menos tiempo muerto y más dinero en tu bolsillo.",
+    icon: (
+      <svg viewBox="0 0 200 200" fill="none" className="w-56 h-56 md:w-72 md:h-72 text-white opacity-[0.07]">
+        <circle cx="48" cy="68" r="10" stroke="currentColor" strokeWidth="2.5"/>
+        <circle cx="152" cy="52" r="10" stroke="currentColor" strokeWidth="2.5"/>
+        <circle cx="130" cy="140" r="10" stroke="currentColor" strokeWidth="2.5"/>
+        <circle cx="60" cy="152" r="10" stroke="currentColor" strokeWidth="2.5"/>
+        <path d="M48 78 Q72 110 130 130" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+        <path d="M152 62 Q148 96 140 140" stroke="currentColor" strokeWidth="2" strokeDasharray="5 4" strokeLinecap="round"/>
+        <path d="M48 78 Q30 120 60 142" stroke="currentColor" strokeWidth="2" strokeDasharray="5 4" strokeLinecap="round"/>
+        <path d="M130 130 Q100 148 70 152" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+        <path d="M48 68 Q96 44 152 52" stroke="currentColor" strokeWidth="2" strokeDasharray="5 4" strokeLinecap="round"/>
+        <circle cx="89" cy="104" r="5" fill="currentColor" opacity="0.6"/>
+        <polyline points="82,100 89,96 96,104 103,98" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+  },
+  {
     eyebrow: "PÁGINAS WEB",
     title: "Tu negocio,\nen internet.",
     body: "Sitio profesional con pagos, panel de administración y todo listo para operar sin depender de nadie más.",
@@ -210,12 +230,12 @@ export default function ServicesSection({ className = "" }: Props) {
         scrollTrigger: {
           trigger: wrapper,
           start: "top top",
-          end: "+=500%",
+          end: "+=600%",
           pin: sticky,
           scrub: 1,
           anticipatePin: 1,
           onUpdate: (self) => {
-            const idx = Math.min(5, Math.floor(self.progress * 6))
+            const idx = Math.min(6, Math.floor(self.progress * 7))
             if (idx !== activeIndexRef.current) {
               activeIndexRef.current = idx
               dots?.forEach((d, i) => {
@@ -229,7 +249,7 @@ export default function ServicesSection({ className = "" }: Props) {
       })
 
       const dur = 0.18
-      ;[0, 1, 2, 3, 4].forEach((i) => {
+      ;[0, 1, 2, 3, 4, 5].forEach((i) => {
         const at = i + 0.78
         tl.to(states[i], { opacity: 0, y: -22, duration: dur }, at)
           .to(icons[i], { opacity: 0, duration: dur }, at)

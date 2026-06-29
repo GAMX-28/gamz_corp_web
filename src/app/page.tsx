@@ -8,7 +8,7 @@ import AnimatedNumber from "@/components/AnimatedNumber"
 
 // ── Stack marquee ─────────────────────────────────────────────────────────────
 const stackRow1 = ["Node.js", "Supabase", "Claude API", "MercadoPago", "Twilio", "Railway", "Next.js", "TypeScript"]
-const stackRow2 = ["Telegram API", "WhatsApp API", "PostgreSQL", "Fly.io", "Netlify", "React", "Vercel", "Turbopack"]
+const stackRow2 = ["Telegram API", "WhatsApp API", "PostgreSQL", "Fly.io", "Netlify", "React", "Vercel", "Zoho"]
 
 // ── Projects ──────────────────────────────────────────────────────────────────
 const projects = [
