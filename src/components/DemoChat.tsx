@@ -99,7 +99,7 @@ export default function DemoChat() {
           <span className="animate-ping absolute inset-0 rounded-full bg-green-400 opacity-75" />
           <span className="relative rounded-full bg-green-500 h-full w-full" />
         </span>
-        Probar demo
+        Ver demo en vivo
       </button>
 
       {/* ── Modal ── */}
@@ -131,7 +131,7 @@ export default function DemoChat() {
                     <span className="inline-flex h-1.5 w-1.5 rounded-full bg-green-500 flex-shrink-0" />
                   )}
                   <p className="text-[11px] leading-none" style={{ color: '#555' }}>
-                    {step === 'select' ? 'Automatización con IA · GAMZ Corp' : 'IA activa · respondiendo en tiempo real'}
+                    {step === 'select' ? '¿Qué tipo de negocio tienes?' : 'IA activa · respondiendo en tiempo real'}
                   </p>
                 </div>
               </div>
@@ -167,42 +167,32 @@ export default function DemoChat() {
             {/* ── Selector ── */}
             {step === 'select' && (
               <div className="flex-1 flex flex-col px-6 overflow-y-auto">
-                <p
-                  className="font-space-grotesk text-[10px] uppercase tracking-[0.2em] pt-6 pb-3"
-                  style={{ color: '#3A3A3A' }}
-                >
-                  Tipo de negocio
-                </p>
-                {BUSINESS_TYPES.map((b) => (
+                <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', marginTop: '20px' }} />
+                {BUSINESS_TYPES.map((b, i) => (
                   <button
                     key={b.id}
                     onClick={() => selectBusiness(b.id)}
-                    className="group flex items-center justify-between w-full text-left py-[15px] transition-all duration-150"
-                    style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}
+                    className="group flex items-center gap-4 w-full text-left py-4 px-2 rounded-lg transition-all duration-150"
+                    style={{ background: 'transparent' }}
+                    onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.04)')}
+                    onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                   >
                     <span
-                      className="font-space-grotesk text-[16px] font-medium transition-colors duration-150"
-                      style={{ color: 'rgba(255,255,255,0.55)' }}
-                      onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
-                      onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.55)')}
+                      className="text-xs font-mono flex-shrink-0 transition-colors duration-150 group-hover:text-white"
+                      style={{ color: '#2563EB' }}
                     >
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span className="font-space-grotesk text-[15px] font-medium text-white">
                       {b.label}
                     </span>
-                    <svg
-                      width="14" height="14" viewBox="0 0 24 24" fill="none"
-                      stroke="rgba(255,255,255,0.18)" strokeWidth="1.8"
-                      className="flex-shrink-0 transition-all duration-150 group-hover:stroke-white/50 group-hover:translate-x-0.5"
-                    >
-                      <path d="M9 18l6-6-6-6" />
-                    </svg>
                   </button>
                 ))}
-                <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }} />
                 <p
-                  className="text-[10px] text-center py-6 mt-auto"
-                  style={{ color: '#2A2A2A' }}
+                  className="text-[10px] text-center mt-auto pb-4 pt-6"
+                  style={{ color: '#2D2D2D' }}
                 >
-                  GAMZ Corp · Powered by Claude
+                  GAMZ Corp
                 </p>
               </div>
             )}
@@ -214,11 +204,11 @@ export default function DemoChat() {
                   {messages.map((msg, i) => (
                     <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                       <div
-                        className="max-w-[80%] px-4 py-2.5 rounded-2xl text-[14px] leading-relaxed"
+                        className="max-w-[80%] px-4 py-2.5 text-[14px] leading-relaxed"
                         style={
                           msg.role === 'user'
-                            ? { background: '#2563EB', color: '#fff', borderBottomRightRadius: '6px' }
-                            : { background: '#141414', color: 'rgba(255,255,255,0.82)', borderBottomLeftRadius: '6px', border: '1px solid rgba(255,255,255,0.06)' }
+                            ? { background: '#2563EB', color: '#fff', borderRadius: '18px 18px 6px 18px' }
+                            : { background: '#141414', color: 'rgba(255,255,255,0.82)', borderRadius: '18px 18px 18px 6px', border: '1px solid rgba(255,255,255,0.06)' }
                         }
                       >
                         {msg.content}
@@ -261,7 +251,7 @@ export default function DemoChat() {
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
                       onKeyDown={handleKey}
-                      placeholder="Escribe aquí..."
+                      placeholder="Mensaje..."
                       autoFocus
                       className="flex-1 bg-transparent outline-none font-inter"
                       style={{
@@ -283,8 +273,8 @@ export default function DemoChat() {
                       </svg>
                     </button>
                   </div>
-                  <p className="text-center mt-2.5 text-[10px]" style={{ color: '#2A2A2A' }}>
-                    GAMZ Corp · IA real con Claude
+                  <p className="text-center mt-2.5 text-[10px]" style={{ color: '#2D2D2D' }}>
+                    GAMZ Corp
                   </p>
                 </div>
               </>
