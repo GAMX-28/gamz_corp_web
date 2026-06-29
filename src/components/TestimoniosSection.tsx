@@ -58,7 +58,7 @@ export default function TestimoniosSection() {
       <h2
         data-reveal
         className="font-space-grotesk text-[clamp(32px,4vw,52px)] font-bold leading-[1.08] tracking-tight mb-20 max-w-xl"
-        style={{ color: "#ffffff", textDecoration: "none", cursor: "default" }}
+        style={{ color: '#ffffff' }}
       >
         Resultados reales.
       </h2>

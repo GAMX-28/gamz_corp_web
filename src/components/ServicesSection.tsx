@@ -300,6 +300,33 @@ export default function ServicesSection({ className = "" }: Props) {
             ))}
           </div>
 
+          {/* Dots — lateral derecho mobile */}
+          <div
+            style={{
+              position: "fixed",
+              right: "16px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              display: "flex",
+              flexDirection: "column",
+              gap: "8px",
+              alignItems: "center",
+              zIndex: 20,
+            }}
+          >
+            {services.map((_, i) => (
+              <div
+                key={i}
+                style={{
+                  width: i === activeIndex ? "8px" : "6px",
+                  height: i === activeIndex ? "8px" : "6px",
+                  borderRadius: "9999px",
+                  background: i === activeIndex ? "white" : "rgba(255,255,255,0.25)",
+                  transition: "all 0.3s ease",
+                }}
+              />
+            ))}
+          </div>
         </div>
 
         {/* ── Desktop layout ── */}
@@ -358,29 +385,21 @@ export default function ServicesSection({ className = "" }: Props) {
             ))}
           </div>
 
-        </div>
-
-        {/* Dots — fixed right side, same on mobile and desktop */}
-        <div
-          className="fixed right-4 top-1/2 -translate-y-1/2 flex flex-col gap-2 items-center z-20 md:absolute md:right-8 md:gap-3"
-          style={{
-            opacity: inView ? 1 : 0,
-            pointerEvents: inView ? "auto" : "none",
-            transition: "opacity 0.3s ease",
-          }}
-        >
-          {services.map((_, i) => (
-            <div
-              key={i}
-              className="rounded-full"
-              style={{
-                width: i === activeIndex ? "8px" : "6px",
-                height: i === activeIndex ? "8px" : "6px",
-                backgroundColor: i === activeIndex ? "#ffffff" : "rgba(255,255,255,0.25)",
-                transition: "width 0.3s ease, height 0.3s ease, background-color 0.3s ease",
-              }}
-            />
-          ))}
+          {/* Dots — lateral derecho desktop */}
+          <div className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-2 items-center z-10">
+            {services.map((_, i) => (
+              <div
+                key={i}
+                style={{
+                  width: i === activeIndex ? "8px" : "6px",
+                  height: i === activeIndex ? "8px" : "6px",
+                  borderRadius: "9999px",
+                  background: i === activeIndex ? "white" : "rgba(255,255,255,0.25)",
+                  transition: "all 0.3s ease",
+                }}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -28,19 +28,16 @@ const projects = [
     num: "04",
     title: "Optimización de rutas con IA",
     desc: "Sistema que calcula las rutas más eficientes para flotas de reparto. Menos combustible, más entregas por día.",
-    stack: "Python, Google Maps API, Claude API, Supabase",
   },
   {
     num: "05",
     title: "Marketing digital con IA",
     desc: "Generación automática de contenido, anuncios y estrategia SEO potenciada con IA para negocios locales.",
-    stack: "Claude API, Next.js, Zoho, Vercel",
   },
   {
     num: "06",
     title: "CRM y ventas automatizadas",
     desc: "Pipeline de ventas conectado con WhatsApp: leads, seguimiento y cierre sin intervención manual.",
-    stack: "Zoho CRM, WhatsApp API, Node.js, Railway",
   },
 ]
 
@@ -135,14 +132,9 @@ export default function Home() {
               <h3 className="font-space-grotesk text-[22px] font-bold text-white leading-snug mb-3">
                 {p.title}
               </h3>
-              <p className="text-[15px] leading-relaxed mb-4" style={{ color: grayColor }}>
+              <p className="text-[15px] leading-relaxed" style={{ color: grayColor }}>
                 {p.desc}
               </p>
-              {p.stack && (
-                <p className="text-[12px] uppercase tracking-[0.1em]" style={{ color: "#3D3D3F" }}>
-                  {p.stack}
-                </p>
-              )}
             </div>
           ))}
         </div>
