@@ -93,36 +93,25 @@ const services = [
     body: "Sitio profesional con pagos, panel de administración y todo listo para operar — sin depender de nadie más.",
     icon: (
       <svg viewBox="0 0 200 200" fill="none" className="w-56 h-56 md:w-72 md:h-72 text-white opacity-[0.07]">
-        {/* Monitor outer frame */}
         <rect x="18" y="28" width="164" height="118" rx="10" stroke="currentColor" strokeWidth="2.5"/>
-        {/* Browser chrome bar */}
         <rect x="28" y="38" width="144" height="18" rx="4" stroke="currentColor" strokeWidth="1.5"/>
-        {/* Traffic lights */}
         <circle cx="40" cy="47" r="3" stroke="currentColor" strokeWidth="1.5"/>
         <circle cx="52" cy="47" r="3" stroke="currentColor" strokeWidth="1.5"/>
         <circle cx="64" cy="47" r="3" stroke="currentColor" strokeWidth="1.5"/>
-        {/* URL bar */}
         <rect x="76" y="42" width="86" height="10" rx="3" stroke="currentColor" strokeWidth="1.5"/>
-        {/* Nav bar in page */}
         <line x1="28" y1="68" x2="172" y2="68" stroke="currentColor" strokeWidth="1.5" opacity="0.5"/>
-        {/* Navbar items */}
         <line x1="38" y1="62" x2="58" y2="62" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
         <line x1="68" y1="62" x2="82" y2="62" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
         <line x1="88" y1="62" x2="102" y2="62" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
-        {/* Hero block */}
         <rect x="38" y="76" width="72" height="40" rx="4" stroke="currentColor" strokeWidth="1.5"/>
-        {/* Hero text lines */}
         <line x1="44" y1="84" x2="80" y2="84" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
         <line x1="44" y1="92" x2="96" y2="92" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
         <line x1="44" y1="100" x2="72" y2="100" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
-        {/* CTA button */}
         <rect x="44" y="106" width="28" height="8" rx="4" stroke="currentColor" strokeWidth="1.5"/>
-        {/* Sidebar card */}
         <rect x="120" y="76" width="44" height="40" rx="4" stroke="currentColor" strokeWidth="1.5"/>
         <line x1="128" y1="86" x2="156" y2="86" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
         <line x1="128" y1="94" x2="148" y2="94" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
         <line x1="128" y1="102" x2="152" y2="102" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
-        {/* Monitor stand */}
         <line x1="100" y1="146" x2="100" y2="166" stroke="currentColor" strokeWidth="2.5"/>
         <line x1="72" y1="166" x2="128" y2="166" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
       </svg>
@@ -140,6 +129,7 @@ export default function ServicesSection({ className = "" }: Props) {
   const statesRef = useRef<HTMLDivElement>(null)
   const iconsRef = useRef<HTMLDivElement>(null)
   const dotsRef = useRef<HTMLDivElement>(null)
+  const gradientRef = useRef<HTMLDivElement>(null)
   const activeIndexRef = useRef(0)
 
   useEffect(() => {
@@ -160,12 +150,14 @@ export default function ServicesSection({ className = "" }: Props) {
 
       const mq = gsap.matchMedia()
 
+      // ── Desktop: sticky scroll con gradiente fluido ──
       mq.add("(min-width: 769px)", () => {
         const wrapper = wrapperRef.current
         const sticky = stickyRef.current
         const statesEl = statesRef.current
         const iconsEl = iconsRef.current
         const dotsEl = dotsRef.current
+        const gradientEl = gradientRef.current
         if (!wrapper || !sticky || !statesEl || !iconsEl) return
 
         const states = statesEl.querySelectorAll<HTMLElement>(".srv-state")
@@ -174,6 +166,21 @@ export default function ServicesSection({ className = "" }: Props) {
 
         gsap.set([...states].slice(1), { opacity: 0, y: 22 })
         gsap.set([...icons].slice(1), { opacity: 0 })
+
+        // Gradiente empieza arriba y baja lentamente mientras scrolleas servicios
+        if (gradientEl) {
+          gsap.set(gradientEl, { y: "0%" })
+          gsap.to(gradientEl, {
+            y: "35%",
+            ease: "none",
+            scrollTrigger: {
+              trigger: wrapper,
+              start: "top top",
+              end: "+=400%",
+              scrub: 2,
+            },
+          })
+        }
 
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -211,15 +218,34 @@ export default function ServicesSection({ className = "" }: Props) {
         }
       })
 
+      // ── Mobile: IntersectionObserver para animaciones suaves ──
       mq.add("(max-width: 768px)", () => {
-        const statesEl = statesRef.current
-        if (!statesEl) return
-        statesEl.querySelectorAll<HTMLElement>(".srv-state").forEach((state) => {
-          gsap.from(state, {
-            opacity: 0, y: 40, duration: 0.8, ease: "power2.out",
-            scrollTrigger: { trigger: state, start: "top 82%" },
-          })
+        const mobileDiv = wrapperRef.current?.querySelector<HTMLElement>(".mobile-services")
+        if (!mobileDiv) return
+
+        const items = mobileDiv.querySelectorAll<HTMLElement>(".srv-state")
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const el = entry.target as HTMLElement
+                el.style.opacity = "1"
+                el.style.transform = "translateY(0)"
+                io.unobserve(el)
+              }
+            })
+          },
+          { threshold: 0.1 }
+        )
+
+        items.forEach((el, i) => {
+          el.style.opacity = "0"
+          el.style.transform = "translateY(32px)"
+          el.style.transition = `opacity 0.75s cubic-bezier(0.22,1,0.36,1) ${i * 80}ms, transform 0.75s cubic-bezier(0.22,1,0.36,1) ${i * 80}ms`
+          io.observe(el)
         })
+
+        return () => io.disconnect()
       })
     }
 
@@ -232,13 +258,29 @@ export default function ServicesSection({ className = "" }: Props) {
 
   return (
     <section id="servicios" ref={wrapperRef} className={`relative ${className}`}>
+
       {/* ── Desktop: sticky scroll ── */}
       <div
         ref={stickyRef}
-        className="hidden md:flex items-center justify-between h-screen px-[10%] gap-[8%]"
+        className="hidden md:flex items-center justify-between h-screen px-[10%] gap-[8%] relative overflow-hidden"
       >
+        {/* Gradiente dorado que baja con el scroll */}
+        <div
+          ref={gradientRef}
+          aria-hidden
+          style={{
+            position: "absolute",
+            inset: 0,
+            background:
+              "radial-gradient(ellipse at 50% 10%, rgba(185,72,10,0.28) 0%, rgba(130,50,6,0.13) 40%, transparent 68%)",
+            pointerEvents: "none",
+            zIndex: 0,
+            willChange: "transform",
+          }}
+        />
+
         {/* Text states */}
-        <div ref={statesRef} className="relative flex-[0_0_42%] h-[360px]">
+        <div ref={statesRef} className="relative z-10 flex-[0_0_42%] h-[360px]">
           {services.map((s, i) => (
             <div key={i} className="srv-state absolute inset-0 flex flex-col justify-center">
               <p className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-5" style={{ color: "#2563EB" }}>
@@ -255,7 +297,7 @@ export default function ServicesSection({ className = "" }: Props) {
         </div>
 
         {/* Icons */}
-        <div ref={iconsRef} className="relative flex-1 h-[320px] flex items-center justify-center">
+        <div ref={iconsRef} className="relative z-10 flex-1 h-[320px] flex items-center justify-center">
           {services.map((s, i) => (
             <div key={i} className="srv-icon absolute inset-0 flex items-center justify-center">
               {s.icon}
@@ -264,7 +306,7 @@ export default function ServicesSection({ className = "" }: Props) {
         </div>
 
         {/* Progress dots */}
-        <div ref={dotsRef} className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-3 items-center">
+        <div ref={dotsRef} className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-3 items-center z-10">
           {services.map((_, i) => (
             <div
               key={i}
@@ -280,9 +322,24 @@ export default function ServicesSection({ className = "" }: Props) {
       </div>
 
       {/* ── Mobile: stacked ── */}
-      <div className="md:hidden px-6 py-24 space-y-16">
+      <div className="mobile-services md:hidden px-6 py-24 space-y-20 relative">
+        {/* Warm ambient glow at top of mobile section */}
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            height: "55%",
+            background:
+              "radial-gradient(ellipse at 50% 0%, rgba(185,72,10,0.22) 0%, rgba(130,50,6,0.09) 45%, transparent 70%)",
+            pointerEvents: "none",
+            zIndex: 0,
+          }}
+        />
         {services.map((s, i) => (
-          <div key={i} className="srv-state">
+          <div key={i} className="srv-state relative z-10">
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-4" style={{ color: "#2563EB" }}>
               {s.eyebrow}
             </p>

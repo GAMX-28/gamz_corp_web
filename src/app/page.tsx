@@ -84,18 +84,17 @@ export default function Home() {
         />
       </div>
 
-      {/* Color bridge — absolute, sin impacto en el layout.
-          Pico exactamente en 100vh = donde termina el hero */}
+      {/* Color bridge hero → servicios */}
       <div
         aria-hidden
         style={{
           position: "absolute",
-          top: "52vh",
+          top: "50vh",
           left: 0,
           right: 0,
-          height: "96vh",
+          height: "100vh",
           background:
-            "linear-gradient(to bottom, transparent 0%, rgba(128,50,8,0.52) 50%, rgba(85,33,5,0.26) 72%, rgba(42,16,2,0.09) 88%, transparent 100%)",
+            "linear-gradient(to bottom, transparent 0%, rgba(200,82,12,0.72) 48%, rgba(150,58,8,0.42) 68%, rgba(80,30,4,0.15) 85%, transparent 100%)",
           pointerEvents: "none",
           zIndex: 5,
         }}
@@ -260,7 +259,7 @@ export default function Home() {
         >
           Cuéntanos qué necesitas. Te contactamos ese mismo día.
         </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className="flex items-center justify-center">
           <a
             href="https://wa.me/525526849714"
             target="_blank"
@@ -268,13 +267,6 @@ export default function Home() {
             className="h-14 px-10 rounded-full bg-white text-black font-semibold text-[16px] tracking-tight transition hover:opacity-80 active:scale-[0.97] inline-flex items-center"
           >
             WhatsApp ↗
-          </a>
-          <a
-            href="mailto:gaelalejandromz@gmail.com"
-            className="h-14 px-10 rounded-full text-white font-medium text-[16px] transition hover:border-white/70 active:scale-[0.97] inline-flex items-center"
-            style={{ border: "1px solid rgba(255,255,255,0.3)" }}
-          >
-            gaelalejandromz@gmail.com
           </a>
         </div>
       </section>
