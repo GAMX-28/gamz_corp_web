@@ -166,8 +166,7 @@ export default function DemoChat() {
 
             {/* ── Selector ── */}
             {step === 'select' && (
-              <div className="flex-1 flex flex-col px-6 overflow-y-auto">
-                <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', marginTop: '20px' }} />
+              <div className="flex-1 flex flex-col px-6 pt-8 gap-1 overflow-y-auto">
                 {BUSINESS_TYPES.map((b, i) => (
                   <button
                     key={b.id}
