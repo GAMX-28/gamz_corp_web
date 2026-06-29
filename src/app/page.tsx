@@ -60,35 +60,38 @@ export default function Home() {
   }, [])
 
   return (
-    <main
-      className="min-h-screen relative"
-      style={{
-        background: `
-          linear-gradient(
-            to bottom,
-            rgba(170,70,0,0.32) 0%,
-            rgba(110,45,0,0.14) 12%,
-            rgba(60,22,0,0.06) 28%,
-            rgba(20,8,0,0.02) 48%,
-            #000 65%
-          )`,
-      }}
-    >
+    <main className="bg-black min-h-screen relative">
       <Nav />
 
-      {/* ── Hero ── */}
-      <AnimatedShaderHero
-        headline={{ line1: "Tu negocio,", line2: "en piloto automático." }}
-        subtitle="Automatizamos lo repetible para que tú te enfoques en crecer."
-        buttons={{
-          primary: {
-            text: "Ver servicios",
-            onClick: () => document.getElementById("servicios")?.scrollIntoView({ behavior: "smooth" }),
-          },
-          secondary: {
-            text: "WhatsApp ↗",
-            onClick: () => window.open("https://wa.me/525526849714", "_blank"),
-          },
+      {/* Hero envuelto en z-10 para que quede sobre el bridge */}
+      <div className="relative z-10">
+        <AnimatedShaderHero
+          headline={{ line1: "Tu negocio,", line2: "en piloto automático." }}
+          subtitle="Automatizamos lo repetible para que tú te enfoques en crecer."
+          buttons={{
+            primary: {
+              text: "Ver servicios",
+              onClick: () => document.getElementById("servicios")?.scrollIntoView({ behavior: "smooth" }),
+            },
+            secondary: {
+              text: "WhatsApp ↗",
+              onClick: () => window.open("https://wa.me/525526849714", "_blank"),
+            },
+          }}
+        />
+      </div>
+
+      {/* Color bridge — empieza donde termina el hero y sangra hacia abajo */}
+      <div
+        aria-hidden
+        style={{
+          marginTop: "-38vh",
+          height: "80vh",
+          background:
+            "linear-gradient(to bottom, transparent 0%, rgba(128,50,8,0.42) 22%, rgba(85,33,5,0.24) 48%, rgba(42,16,2,0.09) 72%, transparent 100%)",
+          pointerEvents: "none",
+          position: "relative",
+          zIndex: 5,
         }}
       />
 
@@ -107,14 +110,14 @@ export default function Home() {
           Lo que ya está<br />corriendo.
         </h2>
 
-        <div className="grid md:grid-cols-3 gap-16 md:gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 lg:gap-10">
           {projects.map((p, i) => (
             <div key={i} data-reveal data-delay={String(i * 100)} className="relative">
               {/* Big background number */}
               <div
                 aria-hidden
                 className="font-space-grotesk font-bold text-white select-none leading-none mb-2"
-                style={{ fontSize: "120px", opacity: 0.05, lineHeight: 1 }}
+                style={{ fontSize: "clamp(72px,10vw,120px)", opacity: 0.05, lineHeight: 1 }}
               >
                 {p.num}
               </div>
