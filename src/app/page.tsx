@@ -94,7 +94,7 @@ export default function Home() {
           right: 0,
           height: "85vh",
           background:
-            "radial-gradient(ellipse 110% 50% at 50% 32%, rgba(175,65,8,0.58) 0%, rgba(120,45,5,0.24) 52%, transparent 100%)",
+            "radial-gradient(ellipse 110% 50% at 50% 32%, rgba(160,95,14,0.36) 0%, rgba(110,62,8,0.14) 55%, transparent 100%)",
           pointerEvents: "none",
           zIndex: 5,
         }}
