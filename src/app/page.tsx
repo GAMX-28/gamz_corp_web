@@ -84,17 +84,17 @@ export default function Home() {
         />
       </div>
 
-      {/* Color bridge hero → servicios */}
+      {/* Color bridge hero → servicios — radial para que no se vea como bloque */}
       <div
         aria-hidden
         style={{
           position: "absolute",
-          top: "50vh",
+          top: "65vh",
           left: 0,
           right: 0,
-          height: "100vh",
+          height: "85vh",
           background:
-            "linear-gradient(to bottom, transparent 0%, rgba(200,82,12,0.72) 48%, rgba(150,58,8,0.42) 68%, rgba(80,30,4,0.15) 85%, transparent 100%)",
+            "radial-gradient(ellipse 110% 50% at 50% 32%, rgba(175,65,8,0.58) 0%, rgba(120,45,5,0.24) 52%, transparent 100%)",
           pointerEvents: "none",
           zIndex: 5,
         }}

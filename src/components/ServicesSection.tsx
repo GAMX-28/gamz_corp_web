@@ -129,10 +129,36 @@ export default function ServicesSection({ className = "" }: Props) {
   const statesRef = useRef<HTMLDivElement>(null)
   const iconsRef = useRef<HTMLDivElement>(null)
   const dotsRef = useRef<HTMLDivElement>(null)
-  const gradientRef = useRef<HTMLDivElement>(null)
   const activeIndexRef = useRef(0)
 
+  // ── Mobile: IntersectionObserver sincrónico (sin GSAP) ──
+  // Se ejecuta antes de que GSAP cargue; el CSS ya puso opacity:0
   useEffect(() => {
+    if (window.matchMedia("(min-width: 769px)").matches) return
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+    const items = wrapperRef.current?.querySelectorAll<HTMLElement>(".srv-mobile-item") ?? []
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("srv-revealed")
+            io.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.12 }
+    )
+    items.forEach((el, i) => {
+      el.style.transitionDelay = `${i * 100}ms`
+      io.observe(el)
+    })
+    return () => io.disconnect()
+  }, [])
+
+  // ── Desktop: GSAP sticky scroll ──
+  useEffect(() => {
+    if (window.matchMedia("(max-width: 768px)").matches) return
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
     if (reduced) return
 
@@ -148,105 +174,54 @@ export default function ServicesSection({ className = "" }: Props) {
       gsap.registerPlugin(ScrollTrigger)
       ScrollTriggerModule = ScrollTrigger
 
-      const mq = gsap.matchMedia()
+      const wrapper = wrapperRef.current
+      const sticky = stickyRef.current
+      const statesEl = statesRef.current
+      const iconsEl = iconsRef.current
+      const dotsEl = dotsRef.current
+      if (!wrapper || !sticky || !statesEl || !iconsEl) return
 
-      // ── Desktop: sticky scroll con gradiente fluido ──
-      mq.add("(min-width: 769px)", () => {
-        const wrapper = wrapperRef.current
-        const sticky = stickyRef.current
-        const statesEl = statesRef.current
-        const iconsEl = iconsRef.current
-        const dotsEl = dotsRef.current
-        const gradientEl = gradientRef.current
-        if (!wrapper || !sticky || !statesEl || !iconsEl) return
+      const states = statesEl.querySelectorAll<HTMLElement>(".srv-state")
+      const icons = iconsEl.querySelectorAll<HTMLElement>(".srv-icon")
+      const dots = dotsEl?.querySelectorAll<HTMLElement>(".srv-dot")
 
-        const states = statesEl.querySelectorAll<HTMLElement>(".srv-state")
-        const icons = iconsEl.querySelectorAll<HTMLElement>(".srv-icon")
-        const dots = dotsEl?.querySelectorAll<HTMLElement>(".srv-dot")
+      gsap.set([...states].slice(1), { opacity: 0, y: 22 })
+      gsap.set([...icons].slice(1), { opacity: 0 })
 
-        gsap.set([...states].slice(1), { opacity: 0, y: 22 })
-        gsap.set([...icons].slice(1), { opacity: 0 })
-
-        // Gradiente empieza arriba y baja lentamente mientras scrolleas servicios
-        if (gradientEl) {
-          gsap.set(gradientEl, { y: "0%" })
-          gsap.to(gradientEl, {
-            y: "35%",
-            ease: "none",
-            scrollTrigger: {
-              trigger: wrapper,
-              start: "top top",
-              end: "+=400%",
-              scrub: 2,
-            },
-          })
-        }
-
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: wrapper,
-            start: "top top",
-            end: "+=400%",
-            pin: sticky,
-            scrub: 1,
-            anticipatePin: 1,
-            onUpdate: (self) => {
-              const idx = Math.min(4, Math.floor(self.progress * 5))
-              if (idx !== activeIndexRef.current) {
-                activeIndexRef.current = idx
-                dots?.forEach((d, i) => {
-                  d.style.width = i === idx ? "10px" : "4px"
-                  d.style.height = i === idx ? "10px" : "4px"
-                  d.style.opacity = i === idx ? "1" : "0.25"
-                })
-              }
-            },
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: wrapper,
+          start: "top top",
+          end: "+=400%",
+          pin: sticky,
+          scrub: 1,
+          anticipatePin: 1,
+          onUpdate: (self) => {
+            const idx = Math.min(4, Math.floor(self.progress * 5))
+            if (idx !== activeIndexRef.current) {
+              activeIndexRef.current = idx
+              dots?.forEach((d, i) => {
+                d.style.width = i === idx ? "10px" : "4px"
+                d.style.height = i === idx ? "10px" : "4px"
+                d.style.opacity = i === idx ? "1" : "0.25"
+              })
+            }
           },
-        })
-
-        const dur = 0.18
-        ;[0, 1, 2, 3].forEach((i) => {
-          const at = i + 0.78
-          tl.to(states[i], { opacity: 0, y: -22, duration: dur }, at)
-            .to(icons[i], { opacity: 0, duration: dur }, at)
-            .fromTo(states[i + 1], { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: dur }, at + 0.14)
-            .to(icons[i + 1], { opacity: 1, duration: dur }, at + 0.14)
-        })
-
-        return () => {
-          gsap.set([...states, ...icons], { clearProps: "all" })
-        }
+        },
       })
 
-      // ── Mobile: IntersectionObserver para animaciones suaves ──
-      mq.add("(max-width: 768px)", () => {
-        const mobileDiv = wrapperRef.current?.querySelector<HTMLElement>(".mobile-services")
-        if (!mobileDiv) return
-
-        const items = mobileDiv.querySelectorAll<HTMLElement>(".srv-state")
-        const io = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                const el = entry.target as HTMLElement
-                el.style.opacity = "1"
-                el.style.transform = "translateY(0)"
-                io.unobserve(el)
-              }
-            })
-          },
-          { threshold: 0.1 }
-        )
-
-        items.forEach((el, i) => {
-          el.style.opacity = "0"
-          el.style.transform = "translateY(32px)"
-          el.style.transition = `opacity 0.75s cubic-bezier(0.22,1,0.36,1) ${i * 80}ms, transform 0.75s cubic-bezier(0.22,1,0.36,1) ${i * 80}ms`
-          io.observe(el)
-        })
-
-        return () => io.disconnect()
+      const dur = 0.18
+      ;[0, 1, 2, 3].forEach((i) => {
+        const at = i + 0.78
+        tl.to(states[i], { opacity: 0, y: -22, duration: dur }, at)
+          .to(icons[i], { opacity: 0, duration: dur }, at)
+          .fromTo(states[i + 1], { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: dur }, at + 0.14)
+          .to(icons[i + 1], { opacity: 1, duration: dur }, at + 0.14)
       })
+
+      return () => {
+        gsap.set([...states, ...icons], { clearProps: "all" })
+      }
     }
 
     init()
@@ -264,18 +239,16 @@ export default function ServicesSection({ className = "" }: Props) {
         ref={stickyRef}
         className="hidden md:flex items-center justify-between h-screen px-[10%] gap-[8%] relative overflow-hidden"
       >
-        {/* Gradiente dorado que baja con el scroll */}
+        {/* Glow ambiental estático — acompaña el calor del hero */}
         <div
-          ref={gradientRef}
           aria-hidden
           style={{
             position: "absolute",
             inset: 0,
             background:
-              "radial-gradient(ellipse at 50% 10%, rgba(185,72,10,0.28) 0%, rgba(130,50,6,0.13) 40%, transparent 68%)",
+              "radial-gradient(ellipse at 50% 15%, rgba(165,60,8,0.18) 0%, rgba(110,42,5,0.07) 48%, transparent 72%)",
             pointerEvents: "none",
             zIndex: 0,
-            willChange: "transform",
           }}
         />
 
@@ -339,7 +312,7 @@ export default function ServicesSection({ className = "" }: Props) {
           }}
         />
         {services.map((s, i) => (
-          <div key={i} className="srv-state relative z-10">
+          <div key={i} className="srv-mobile-item relative z-10">
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-4" style={{ color: "#2563EB" }}>
               {s.eyebrow}
             </p>
