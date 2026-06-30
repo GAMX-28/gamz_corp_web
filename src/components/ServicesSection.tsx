@@ -23,9 +23,9 @@ const services = [
     ),
   },
   {
-    eyebrow: "TELEGRAM & WHATSAPP",
+    eyebrow: "TELEGRAM · WHATSAPP · EMAIL",
     title: "Análisis en\ntiempo real.",
-    body: "Notificaciones, análisis y atención automatizada directo en Telegram, para tu equipo o para los clientes de tu negocio.",
+    body: "Notificaciones, análisis y atención automatizada por Telegram, WhatsApp o correo electrónico, para tu equipo o para los clientes de tu negocio.",
     icon: (
       <svg viewBox="0 0 200 200" fill="none" className="w-full h-full text-white">
         <line x1="100" y1="34" x2="100" y2="58" stroke="currentColor" strokeWidth="2.5"/>
