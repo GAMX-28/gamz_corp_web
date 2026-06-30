@@ -167,6 +167,7 @@ export default function ServicesSection({ className = "" }: Props) {
   const [grayColor, setGrayColor] = useState('#86868B')
   const [hintVisible, setHintVisible] = useState(false)
   const [hintOpacity, setHintOpacity] = useState(0)
+  const [isInSection, setIsInSection] = useState(false)
   const hintActivated = useRef(false)
 
   useEffect(() => {
@@ -177,6 +178,8 @@ export default function ServicesSection({ className = "" }: Props) {
     const onScroll = () => {
       const rect = wrapperRef.current?.getBoundingClientRect()
       if (!rect) return
+
+      setIsInSection(rect.top <= 0 && rect.bottom >= 0)
 
       const scrolled = -rect.top
       const total = rect.height - window.innerHeight
@@ -342,6 +345,8 @@ export default function ServicesSection({ className = "" }: Props) {
             flexDirection: "column",
             gap: "8px",
             zIndex: 50,
+            opacity: isInSection ? 1 : 0,
+            transition: "opacity 0.3s ease",
           }}
         >
           {services.map((_, i) => (
