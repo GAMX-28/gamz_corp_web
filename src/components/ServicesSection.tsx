@@ -244,7 +244,7 @@ export default function ServicesSection({ className = "" }: Props) {
       id="servicios"
       ref={wrapperRef}
       className={`relative ${className}`}
-      style={{ height: `${services.length * 60}vh` }}
+      style={{ height: `${services.length * 100}vh` }}
     >
       {/* Sentinels — en el wrapper 700vh para que IO los detecte al scrollear */}
       {Array.from({ length: services.length }, (_, i) => (
