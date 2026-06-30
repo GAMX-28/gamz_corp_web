@@ -167,6 +167,7 @@ export default function ServicesSection({ className = "" }: Props) {
   const [grayColor, setGrayColor] = useState('#86868B')
   const [inView, setInView] = useState(false)
   const [showHint, setShowHint] = useState(true)
+  const [isInSection, setIsInSection] = useState(false)
 
   useEffect(() => {
     if (window.innerWidth < 768) setGrayColor('#a0a0a0')
@@ -176,7 +177,11 @@ export default function ServicesSection({ className = "" }: Props) {
     const el = wrapperRef.current
     if (!el) return
     const observer = new IntersectionObserver(
-      ([entry]) => setInView(entry.isIntersecting),
+      ([entry]) => {
+        setInView(entry.isIntersecting)
+        const rect = el.getBoundingClientRect()
+        setIsInSection(rect.top <= 0 && rect.bottom >= window.innerHeight)
+      },
       { threshold: 0 }
     )
     observer.observe(el)
@@ -185,7 +190,13 @@ export default function ServicesSection({ className = "" }: Props) {
 
   useEffect(() => {
     const timer = setTimeout(() => setShowHint(false), 3000)
-    const onScroll = () => setShowHint(false)
+    const onScroll = () => {
+      setShowHint(false)
+      if (wrapperRef.current) {
+        const rect = wrapperRef.current.getBoundingClientRect()
+        setIsInSection(rect.top <= 0 && rect.bottom >= window.innerHeight)
+      }
+    }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => {
       clearTimeout(timer)
@@ -372,42 +383,36 @@ export default function ServicesSection({ className = "" }: Props) {
         </div>
 
         {/* Scroll hint */}
-        <style>{`
-          @keyframes bounce-arrow {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(6px); }
-          }
-          .bounce-arrow { animation: bounce-arrow 1.5s ease infinite; }
-        `}</style>
         <div
           style={{
-            position: "absolute",
+            position: "fixed",
+            bottom: "40px",
             left: "50%",
             transform: "translateX(-50%)",
+            zIndex: 100,
+            opacity: showHint && isInSection ? 1 : 0,
+            transition: "opacity 0.8s ease",
+            pointerEvents: "none",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             gap: "6px",
-            opacity: showHint ? 1 : 0,
-            transition: "opacity 0.8s ease",
-            pointerEvents: "none",
-            zIndex: 40,
+            whiteSpace: "nowrap",
           }}
-          className="bottom-[80px] sm:bottom-[40px]"
         >
-          <span
-            style={{
-              color: "#86868B",
-              fontSize: "11px",
-              fontFamily: "Space Grotesk, sans-serif",
-              fontWeight: 500,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-            }}
-          >
+          <p style={{
+            fontFamily: "Space Grotesk, sans-serif",
+            fontSize: "11px",
+            color: "#86868B",
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            margin: 0,
+          }}>
             Desliza para explorar
+          </p>
+          <span style={{ color: "#2563EB", fontSize: "16px", animation: "bounce-arrow 1.5s ease infinite" }}>
+            ↓
           </span>
-          <span className="bounce-arrow" style={{ color: "#2563EB", fontSize: "16px", lineHeight: 1 }}>↓</span>
         </div>
 
         {/* Dots — único bloque vertical lateral derecho */}
