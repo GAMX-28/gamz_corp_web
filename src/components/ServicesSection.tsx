@@ -166,7 +166,8 @@ export default function ServicesSection({ className = "" }: Props) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [grayColor, setGrayColor] = useState('#86868B')
   const [inView, setInView] = useState(false)
-  const [showHint, setShowHint] = useState(false)
+  const [hintVisible, setHintVisible] = useState(false)
+  const [hintOpacity, setHintOpacity] = useState(0)
 
   useEffect(() => {
     if (window.innerWidth < 768) setGrayColor('#a0a0a0')
@@ -188,7 +189,8 @@ export default function ServicesSection({ className = "" }: Props) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setShowHint(true)
+          setHintVisible(true)
+          setTimeout(() => setHintOpacity(1), 50)
           observer.disconnect()
         }
       },
@@ -199,10 +201,13 @@ export default function ServicesSection({ className = "" }: Props) {
   }, [])
 
   useEffect(() => {
-    if (!showHint) return
-    const timer = setTimeout(() => setShowHint(false), 2000)
+    if (!hintVisible) return
+    const timer = setTimeout(() => {
+      setHintOpacity(0)
+      setTimeout(() => setHintVisible(false), 800)
+    }, 4000)
     return () => clearTimeout(timer)
-  }, [showHint])
+  }, [hintVisible])
 
   useEffect(() => {
     const sentinelEls = wrapperRef.current?.querySelectorAll("[data-index]")
@@ -396,7 +401,7 @@ export default function ServicesSection({ className = "" }: Props) {
       </div>
     </section>
 
-    {showHint && (
+    {hintVisible && (
       <div
         style={{
           position: 'fixed',
@@ -410,7 +415,8 @@ export default function ServicesSection({ className = "" }: Props) {
           gap: '6px',
           pointerEvents: 'none',
           whiteSpace: 'nowrap',
-          animation: 'fadeIn 0.5s ease',
+          opacity: hintOpacity,
+          transition: 'opacity 0.8s ease',
         }}
       >
         <span style={{
