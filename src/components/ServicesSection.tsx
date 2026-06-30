@@ -166,7 +166,7 @@ export default function ServicesSection({ className = "" }: Props) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [grayColor, setGrayColor] = useState('#86868B')
   const [inView, setInView] = useState(false)
-  const [showHint, setShowHint] = useState(true)
+  const [showHint, setShowHint] = useState(false)
 
   useEffect(() => {
     if (window.innerWidth < 768) setGrayColor('#a0a0a0')
@@ -184,9 +184,25 @@ export default function ServicesSection({ className = "" }: Props) {
   }, [])
 
   useEffect(() => {
+    if (!wrapperRef.current) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShowHint(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.1 }
+    )
+    observer.observe(wrapperRef.current)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!showHint) return
     const timer = setTimeout(() => setShowHint(false), 4000)
     return () => clearTimeout(timer)
-  }, [])
+  }, [showHint])
 
   useEffect(() => {
     if (activeIndex > 0) setShowHint(false)
@@ -395,10 +411,10 @@ export default function ServicesSection({ className = "" }: Props) {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '8px',
+          gap: '6px',
           pointerEvents: 'none',
-          transition: 'opacity 0.8s ease',
           whiteSpace: 'nowrap',
+          animation: 'fadeIn 0.5s ease',
         }}
       >
         <span style={{
