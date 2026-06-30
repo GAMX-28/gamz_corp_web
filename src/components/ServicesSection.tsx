@@ -180,8 +180,8 @@ export default function ServicesSection({ className = "" }: Props) {
 
       const scrolled = -rect.top
       const total = rect.height - window.innerHeight
-      const adjustedProgress = Math.max(0, (scrolled + window.innerHeight * 0.5) / total)
-      const index = Math.min(services.length - 1, Math.floor(adjustedProgress * services.length))
+      const progress = Math.max(0, Math.min(1, scrolled / total))
+      const index = Math.min(services.length - 1, Math.floor(progress * (services.length + 0.5)))
       setActiveIndex(index)
 
 
@@ -214,7 +214,7 @@ export default function ServicesSection({ className = "" }: Props) {
       id="servicios"
       ref={wrapperRef}
       className={`relative ${className}`}
-      style={{ height: `${services.length * 80}vh` }}
+      style={{ height: `${services.length * 60}vh` }}
     >
 <div
         style={{ position: "sticky", top: 0, height: "100vh" }}
