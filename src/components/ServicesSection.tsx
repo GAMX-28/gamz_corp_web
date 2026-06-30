@@ -165,10 +165,7 @@ export default function ServicesSection({ className = "" }: Props) {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const [activeIndex, setActiveIndex] = useState(0)
   const [grayColor, setGrayColor] = useState('#86868B')
-  const [hintVisible, setHintVisible] = useState(false)
-  const [hintOpacity, setHintOpacity] = useState(0)
   const [isInSection, setIsInSection] = useState(false)
-  const hintActivated = useRef(false)
 
   useEffect(() => {
     if (window.innerWidth < 768) setGrayColor('#a0a0a0')
@@ -188,24 +185,6 @@ export default function ServicesSection({ className = "" }: Props) {
       setActiveIndex(index)
 
 
-      if (rect.top <= 0 && !hintActivated.current) {
-        hintActivated.current = true
-        setHintVisible(true)
-        setTimeout(() => setHintOpacity(1), 100)
-      }
-
-
-      if (rect.top > 0 && hintActivated.current) {
-        hintActivated.current = false
-        setHintOpacity(0)
-        setTimeout(() => setHintVisible(false), 800)
-      }
-
-
-      if (index === services.length - 1) {
-        setHintOpacity(0)
-        setTimeout(() => setHintVisible(false), 800)
-      }
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
@@ -365,24 +344,22 @@ export default function ServicesSection({ className = "" }: Props) {
       </div>
     </section>
 
-    {hintVisible && (
-      <div
-        style={{
-          position: 'fixed',
-          bottom: '32px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          zIndex: 9999,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '6px',
-          pointerEvents: 'none',
-          whiteSpace: 'nowrap',
-          opacity: hintOpacity,
-          transition: 'opacity 0.8s ease',
-        }}
-      >
+    {isInSection && activeIndex < services.length - 1 && (
+      <div style={{
+        position: 'fixed',
+        bottom: '32px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 9999,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '6px',
+        pointerEvents: 'none',
+        whiteSpace: 'nowrap',
+        opacity: 1,
+        transition: 'opacity 0.5s ease',
+      }}>
         <span style={{
           fontFamily: 'Space Grotesk, sans-serif',
           fontSize: '11px',
