@@ -190,14 +190,29 @@ export default function ServicesSection({ className = "" }: Props) {
       const rect = wrapperRef.current?.getBoundingClientRect()
       if (!rect) return
 
+      // activeIndex via scroll position
+      const scrolled = -rect.top
+      const total = rect.height - window.innerHeight
+      const adjustedProgress = Math.max(0, (scrolled + window.innerHeight * 0.5) / total)
+      const index = Math.min(services.length - 1, Math.floor(adjustedProgress * services.length))
+      setActiveIndex(index)
+
+      // hint: aparece cuando sección sticky activa
       if (rect.top <= 0 && !hintActivated.current) {
         hintActivated.current = true
         setHintVisible(true)
         setTimeout(() => setHintOpacity(1), 100)
       }
 
+      // hint: desaparece si el usuario sube
       if (rect.top > 0 && hintActivated.current) {
         hintActivated.current = false
+        setHintOpacity(0)
+        setTimeout(() => setHintVisible(false), 800)
+      }
+
+      // hint: desaparece en el último servicio
+      if (index === services.length - 1) {
         setHintOpacity(0)
         setTimeout(() => setHintVisible(false), 800)
       }
@@ -206,62 +221,15 @@ export default function ServicesSection({ className = "" }: Props) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  useEffect(() => {
-    if (activeIndex === services.length - 1) {
-      setHintOpacity(0)
-      setTimeout(() => setHintVisible(false), 800)
-    }
-  }, [activeIndex])
-
-  useEffect(() => {
-    const sentinelEls = wrapperRef.current?.querySelectorAll("[data-index]")
-    if (!sentinelEls) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = parseInt(
-              (entry.target as HTMLElement).dataset.index || "0"
-            )
-            setActiveIndex(Math.min(index, services.length - 1))
-          }
-        })
-      },
-      {
-        threshold: 0,
-        rootMargin: "-40% 0px -40% 0px",
-      }
-    )
-
-    sentinelEls.forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [])
-
   return (
     <>
     <section
       id="servicios"
       ref={wrapperRef}
       className={`relative ${className}`}
-      style={{ height: `${services.length * 100}vh` }}
+      style={{ height: `${services.length * 80}vh` }}
     >
-      {/* Sentinels — en el wrapper 700vh para que IO los detecte al scrollear */}
-      {Array.from({ length: services.length }, (_, i) => (
-        <div
-          key={i}
-          data-index={i}
-          style={{
-            position: "absolute",
-            top: `${(i / services.length) * 100}%`,
-            height: "1px",
-            width: "100%",
-            pointerEvents: "none",
-          }}
-        />
-      ))}
-
-      <div
+<div
         style={{ position: "sticky", top: 0, height: "100vh" }}
         className="relative overflow-hidden"
       >
