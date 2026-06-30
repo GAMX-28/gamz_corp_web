@@ -19,10 +19,28 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "GAMZ Corp | Automatización con IA",
+  title: "GAMZ Corp — Automatización con IA para negocios en México",
   description:
-    "Construimos bots, automatizaciones y sistemas con IA que trabajan por ti, para que tú te enfoques en lo que importa.",
-  keywords: ["automatización", "inteligencia artificial", "bots", "WhatsApp", "México"],
+    "Construimos bots, automatizaciones y sistemas con IA para negocios mexicanos. WhatsApp bots, Telegram bots, páginas web y más.",
+  keywords: "automatización, inteligencia artificial, bots WhatsApp, bots Telegram, páginas web, México, GAMZ Corp",
+  authors: [{ name: "GAMZ Corp" }],
+  openGraph: {
+    title: "GAMZ Corp — Automatización con IA",
+    description: "Bots, automatizaciones y sistemas con IA para negocios en México.",
+    url: "https://gamzcorp.vercel.app",
+    siteName: "GAMZ Corp",
+    locale: "es_MX",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "GAMZ Corp — Automatización con IA",
+    description: "Bots, automatizaciones y sistemas con IA para negocios en México.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 }
 
 export default function RootLayout({

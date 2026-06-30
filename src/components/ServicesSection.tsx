@@ -165,7 +165,6 @@ export default function ServicesSection({ className = "" }: Props) {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const [activeIndex, setActiveIndex] = useState(0)
   const [grayColor, setGrayColor] = useState('#86868B')
-  const [inView, setInView] = useState(false)
   const [hintVisible, setHintVisible] = useState(false)
   const [hintOpacity, setHintOpacity] = useState(0)
   const hintActivated = useRef(false)
@@ -175,43 +174,31 @@ export default function ServicesSection({ className = "" }: Props) {
   }, [])
 
   useEffect(() => {
-    const el = wrapperRef.current
-    if (!el) return
-    const observer = new IntersectionObserver(
-      ([entry]) => setInView(entry.isIntersecting),
-      { threshold: 0 }
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
-
-  useEffect(() => {
     const onScroll = () => {
       const rect = wrapperRef.current?.getBoundingClientRect()
       if (!rect) return
 
-      // activeIndex via scroll position
       const scrolled = -rect.top
       const total = rect.height - window.innerHeight
       const adjustedProgress = Math.max(0, (scrolled + window.innerHeight * 0.5) / total)
       const index = Math.min(services.length - 1, Math.floor(adjustedProgress * services.length))
       setActiveIndex(index)
 
-      // hint: aparece cuando sección sticky activa
+
       if (rect.top <= 0 && !hintActivated.current) {
         hintActivated.current = true
         setHintVisible(true)
         setTimeout(() => setHintOpacity(1), 100)
       }
 
-      // hint: desaparece si el usuario sube
+
       if (rect.top > 0 && hintActivated.current) {
         hintActivated.current = false
         setHintOpacity(0)
         setTimeout(() => setHintVisible(false), 800)
       }
 
-      // hint: desaparece en el último servicio
+
       if (index === services.length - 1) {
         setHintOpacity(0)
         setTimeout(() => setHintVisible(false), 800)
