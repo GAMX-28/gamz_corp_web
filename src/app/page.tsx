@@ -67,7 +67,7 @@ export default function Home() {
       <Nav />
 
       {/* Hero envuelto en z-10 para que quede sobre el bridge */}
-      <div className="relative z-10">
+      <div id="hero" className="relative z-10">
         <AnimatedShaderHero
           headline={{ line1: "Tu negocio,", line2: "en piloto automático." }}
           subtitle="Diseñamos soluciones digitales para negocios en México, desde bots inteligentes hasta plataformas completas, adaptadas exactamente a lo que tu empresa necesita."

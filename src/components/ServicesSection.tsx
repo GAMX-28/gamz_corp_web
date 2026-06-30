@@ -184,13 +184,24 @@ export default function ServicesSection({ className = "" }: Props) {
   }, [])
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowHint(false), 4000)
-    const onScroll = () => setShowHint(false)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => {
-      clearTimeout(timer)
-      window.removeEventListener('scroll', onScroll)
+    const hero = document.querySelector('#hero') ||
+                 document.querySelector('section:first-of-type') ||
+                 document.querySelector('[data-section="hero"]')
+
+    if (!hero) {
+      const onScroll = () => {
+        if (window.scrollY > window.innerHeight * 0.5) setShowHint(false)
+      }
+      window.addEventListener('scroll', onScroll, { passive: true })
+      return () => window.removeEventListener('scroll', onScroll)
     }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (!entry.isIntersecting) setShowHint(false) },
+      { threshold: 0.1 }
+    )
+    observer.observe(hero)
+    return () => observer.disconnect()
   }, [])
 
   useEffect(() => {
@@ -405,7 +416,7 @@ export default function ServicesSection({ className = "" }: Props) {
       <div
         style={{
           position: 'fixed',
-          bottom: '80px',
+          bottom: '32px',
           left: '50%',
           transform: 'translateX(-50%)',
           zIndex: 9999,
