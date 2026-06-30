@@ -166,7 +166,8 @@ export default function ServicesSection({ className = "" }: Props) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [grayColor, setGrayColor] = useState('#86868B')
   const [inView, setInView] = useState(false)
-  const [showHint, setShowHint] = useState(true)
+  const [showHint, setShowHint] = useState(false)
+  const hintShown = useRef(false)
 
   useEffect(() => {
     if (window.innerWidth < 768) setGrayColor('#a0a0a0')
@@ -184,25 +185,22 @@ export default function ServicesSection({ className = "" }: Props) {
   }, [])
 
   useEffect(() => {
-    const hero = document.querySelector('#hero') ||
-                 document.querySelector('section:first-of-type') ||
-                 document.querySelector('[data-section="hero"]')
-
-    if (!hero) {
-      const onScroll = () => {
-        if (window.scrollY > window.innerHeight * 0.5) setShowHint(false)
+    const onScroll = () => {
+      if (!wrapperRef.current || hintShown.current) return
+      const rect = wrapperRef.current.getBoundingClientRect()
+      if (rect.top <= 0 && rect.bottom > window.innerHeight) {
+        hintShown.current = true
+        setShowHint(true)
+        setTimeout(() => setShowHint(false), 3000)
       }
-      window.addEventListener('scroll', onScroll, { passive: true })
-      return () => window.removeEventListener('scroll', onScroll)
     }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (!entry.isIntersecting) setShowHint(false) },
-      { threshold: 0.1 }
-    )
-    observer.observe(hero)
-    return () => observer.disconnect()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  useEffect(() => {
+    if (activeIndex > 0) setShowHint(false)
+  }, [activeIndex])
 
   useEffect(() => {
     const sentinelEls = wrapperRef.current?.querySelectorAll("[data-index]")
@@ -271,22 +269,6 @@ export default function ServicesSection({ className = "" }: Props) {
 
         {/* ── Mobile layout ── */}
         <div className="md:hidden absolute inset-0 flex flex-col items-center justify-center px-6 z-10">
-          {/* Icons */}
-          <div className="relative w-20 h-20 mb-8 flex-shrink-0">
-            {services.map((s, i) => (
-              <div
-                key={i}
-                className="absolute inset-0"
-                style={{
-                  opacity: i === activeIndex ? 0.15 : 0,
-                  transition: "opacity 0.7s ease",
-                }}
-              >
-                {s.icon}
-              </div>
-            ))}
-          </div>
-
           {/* Text states */}
           <div className="relative w-full text-center" style={{ height: "260px" }}>
             {services.map((s, i) => (
