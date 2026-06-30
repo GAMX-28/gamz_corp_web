@@ -166,10 +166,8 @@ export default function ServicesSection({ className = "" }: Props) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [grayColor, setGrayColor] = useState('#86868B')
   const [inView, setInView] = useState(false)
-  const [hintVisible, setHintVisible] = useState(false)
+  const [hintVisible, setHintVisible] = useState(true)
   const [hintOpacity, setHintOpacity] = useState(0)
-  const hintShownRef = useRef(false)
-  const activeIndexRef = useRef(0)
 
   useEffect(() => {
     if (window.innerWidth < 768) setGrayColor('#a0a0a0')
@@ -187,31 +185,16 @@ export default function ServicesSection({ className = "" }: Props) {
   }, [])
 
   useEffect(() => {
-    const onScroll = () => {
-      if (!wrapperRef.current) return
-      const rect = wrapperRef.current.getBoundingClientRect()
-      const inSection = rect.top <= 0 && rect.bottom > window.innerHeight
-
-      if (inSection && !hintShownRef.current) {
-        hintShownRef.current = true
-        setHintVisible(true)
-        setTimeout(() => setHintOpacity(1), 50)
-      }
-
-      if (rect.top > 100) {
-        hintShownRef.current = false
-        setHintOpacity(0)
-        setTimeout(() => setHintVisible(false), 800)
-      }
-
-      if (activeIndexRef.current === services.length - 1) {
-        setHintOpacity(0)
-        setTimeout(() => setHintVisible(false), 800)
-      }
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    const fadeIn = setTimeout(() => setHintOpacity(1), 100)
+    return () => clearTimeout(fadeIn)
   }, [])
+
+  useEffect(() => {
+    if (activeIndex === services.length - 1) {
+      setHintOpacity(0)
+      setTimeout(() => setHintVisible(false), 800)
+    }
+  }, [activeIndex])
 
   useEffect(() => {
     const sentinelEls = wrapperRef.current?.querySelectorAll("[data-index]")
@@ -224,9 +207,7 @@ export default function ServicesSection({ className = "" }: Props) {
             const index = parseInt(
               (entry.target as HTMLElement).dataset.index || "0"
             )
-            const clamped = Math.min(index, services.length - 1)
-            activeIndexRef.current = clamped
-            setActiveIndex(clamped)
+            setActiveIndex(Math.min(index, services.length - 1))
           }
         })
       },
