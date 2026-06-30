@@ -166,6 +166,7 @@ export default function ServicesSection({ className = "" }: Props) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [grayColor, setGrayColor] = useState('#86868B')
   const [inView, setInView] = useState(false)
+  const [showHint, setShowHint] = useState(true)
 
   useEffect(() => {
     if (window.innerWidth < 768) setGrayColor('#a0a0a0')
@@ -180,6 +181,16 @@ export default function ServicesSection({ className = "" }: Props) {
     )
     observer.observe(el)
     return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowHint(false), 3000)
+    const onScroll = () => setShowHint(false)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      clearTimeout(timer)
+      window.removeEventListener('scroll', onScroll)
+    }
   }, [])
 
   useEffect(() => {
@@ -212,7 +223,7 @@ export default function ServicesSection({ className = "" }: Props) {
       id="servicios"
       ref={wrapperRef}
       className={`relative ${className}`}
-      style={{ height: `${services.length * 80}vh` }}
+      style={{ height: `${services.length * 60}vh` }}
     >
       {/* Sentinels — en el wrapper 700vh para que IO los detecte al scrollear */}
       {Array.from({ length: services.length }, (_, i) => (
@@ -358,6 +369,45 @@ export default function ServicesSection({ className = "" }: Props) {
             ))}
           </div>
 
+        </div>
+
+        {/* Scroll hint */}
+        <style>{`
+          @keyframes bounce-arrow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(6px); }
+          }
+          .bounce-arrow { animation: bounce-arrow 1.5s ease infinite; }
+        `}</style>
+        <div
+          style={{
+            position: "absolute",
+            left: "50%",
+            transform: "translateX(-50%)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "6px",
+            opacity: showHint ? 1 : 0,
+            transition: "opacity 0.8s ease",
+            pointerEvents: "none",
+            zIndex: 40,
+          }}
+          className="bottom-[80px] sm:bottom-[40px]"
+        >
+          <span
+            style={{
+              color: "#86868B",
+              fontSize: "11px",
+              fontFamily: "Space Grotesk, sans-serif",
+              fontWeight: 500,
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+            }}
+          >
+            Desliza para explorar
+          </span>
+          <span className="bounce-arrow" style={{ color: "#2563EB", fontSize: "16px", lineHeight: 1 }}>↓</span>
         </div>
 
         {/* Dots — único bloque vertical lateral derecho */}
