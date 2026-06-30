@@ -167,7 +167,6 @@ export default function ServicesSection({ className = "" }: Props) {
   const [grayColor, setGrayColor] = useState('#86868B')
   const [inView, setInView] = useState(false)
   const [showHint, setShowHint] = useState(true)
-  const [isInSection, setIsInSection] = useState(false)
 
   useEffect(() => {
     if (window.innerWidth < 768) setGrayColor('#a0a0a0')
@@ -177,11 +176,7 @@ export default function ServicesSection({ className = "" }: Props) {
     const el = wrapperRef.current
     if (!el) return
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        setInView(entry.isIntersecting)
-        const rect = el.getBoundingClientRect()
-        setIsInSection(rect.top <= 0 && rect.bottom >= window.innerHeight)
-      },
+      ([entry]) => setInView(entry.isIntersecting),
       { threshold: 0 }
     )
     observer.observe(el)
@@ -189,14 +184,8 @@ export default function ServicesSection({ className = "" }: Props) {
   }, [])
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowHint(false), 3000)
-    const onScroll = () => {
-      setShowHint(false)
-      if (wrapperRef.current) {
-        const rect = wrapperRef.current.getBoundingClientRect()
-        setIsInSection(rect.top <= 0 && rect.bottom >= window.innerHeight)
-      }
-    }
+    const timer = setTimeout(() => setShowHint(false), 4000)
+    const onScroll = () => setShowHint(false)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => {
       clearTimeout(timer)
@@ -230,6 +219,7 @@ export default function ServicesSection({ className = "" }: Props) {
   }, [])
 
   return (
+    <>
     <section
       id="servicios"
       ref={wrapperRef}
@@ -382,39 +372,6 @@ export default function ServicesSection({ className = "" }: Props) {
 
         </div>
 
-        {/* Scroll hint */}
-        <div
-          style={{
-            position: "fixed",
-            bottom: "40px",
-            left: "50%",
-            transform: "translateX(-50%)",
-            zIndex: 100,
-            opacity: showHint && isInSection ? 1 : 0,
-            transition: "opacity 0.8s ease",
-            pointerEvents: "none",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "6px",
-            whiteSpace: "nowrap",
-          }}
-        >
-          <p style={{
-            fontFamily: "Space Grotesk, sans-serif",
-            fontSize: "11px",
-            color: "#86868B",
-            letterSpacing: "0.2em",
-            textTransform: "uppercase",
-            margin: 0,
-          }}>
-            Desliza para explorar
-          </p>
-          <span style={{ color: "#2563EB", fontSize: "16px", animation: "bounce-arrow 1.5s ease infinite" }}>
-            ↓
-          </span>
-        </div>
-
         {/* Dots — único bloque vertical lateral derecho */}
         <div
           style={{
@@ -443,5 +400,43 @@ export default function ServicesSection({ className = "" }: Props) {
         </div>
       </div>
     </section>
+
+    {showHint && (
+      <div
+        style={{
+          position: 'fixed',
+          bottom: '80px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 9999,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '8px',
+          pointerEvents: 'none',
+          transition: 'opacity 0.8s ease',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        <span style={{
+          fontFamily: 'Space Grotesk, sans-serif',
+          fontSize: '11px',
+          color: '#86868B',
+          letterSpacing: '0.2em',
+          textTransform: 'uppercase',
+        }}>
+          Desliza para explorar
+        </span>
+        <span style={{
+          color: '#2563EB',
+          fontSize: '18px',
+          display: 'inline-block',
+          animation: 'bounce-arrow 1.5s ease infinite',
+        }}>
+          ↓
+        </span>
+      </div>
+    )}
+    </>
   )
 }
