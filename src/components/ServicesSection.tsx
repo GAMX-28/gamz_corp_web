@@ -201,13 +201,11 @@ export default function ServicesSection({ className = "" }: Props) {
   }, [])
 
   useEffect(() => {
-    if (!hintVisible) return
-    const timer = setTimeout(() => {
+    if (activeIndex === services.length - 1) {
       setHintOpacity(0)
       setTimeout(() => setHintVisible(false), 800)
-    }, 4000)
-    return () => clearTimeout(timer)
-  }, [hintVisible])
+    }
+  }, [activeIndex])
 
   useEffect(() => {
     const sentinelEls = wrapperRef.current?.querySelectorAll("[data-index]")
