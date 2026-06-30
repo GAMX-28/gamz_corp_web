@@ -166,8 +166,9 @@ export default function ServicesSection({ className = "" }: Props) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [grayColor, setGrayColor] = useState('#86868B')
   const [inView, setInView] = useState(false)
-  const [hintVisible, setHintVisible] = useState(true)
+  const [hintVisible, setHintVisible] = useState(false)
   const [hintOpacity, setHintOpacity] = useState(0)
+  const hintActivated = useRef(false)
 
   useEffect(() => {
     if (window.innerWidth < 768) setGrayColor('#a0a0a0')
@@ -185,8 +186,24 @@ export default function ServicesSection({ className = "" }: Props) {
   }, [])
 
   useEffect(() => {
-    const fadeIn = setTimeout(() => setHintOpacity(1), 100)
-    return () => clearTimeout(fadeIn)
+    const onScroll = () => {
+      const rect = wrapperRef.current?.getBoundingClientRect()
+      if (!rect) return
+
+      if (rect.top <= 0 && !hintActivated.current) {
+        hintActivated.current = true
+        setHintVisible(true)
+        setTimeout(() => setHintOpacity(1), 100)
+      }
+
+      if (rect.top > 0 && hintActivated.current) {
+        hintActivated.current = false
+        setHintOpacity(0)
+        setTimeout(() => setHintVisible(false), 800)
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   useEffect(() => {
