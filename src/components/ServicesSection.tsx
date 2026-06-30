@@ -169,6 +169,7 @@ export default function ServicesSection({ className = "" }: Props) {
   const [hintVisible, setHintVisible] = useState(false)
   const [hintOpacity, setHintOpacity] = useState(0)
   const hintShownRef = useRef(false)
+  const activeIndexRef = useRef(0)
 
   useEffect(() => {
     if (window.innerWidth < 768) setGrayColor('#a0a0a0')
@@ -189,29 +190,28 @@ export default function ServicesSection({ className = "" }: Props) {
     const onScroll = () => {
       if (!wrapperRef.current) return
       const rect = wrapperRef.current.getBoundingClientRect()
+      const inSection = rect.top <= 0 && rect.bottom > window.innerHeight
 
-      if (rect.top > window.innerHeight * 0.5) {
+      if (inSection && !hintShownRef.current) {
+        hintShownRef.current = true
+        setHintVisible(true)
+        setTimeout(() => setHintOpacity(1), 50)
+      }
+
+      if (rect.top > 100) {
         hintShownRef.current = false
         setHintOpacity(0)
         setTimeout(() => setHintVisible(false), 800)
       }
 
-      if (rect.top <= 0 && rect.bottom > window.innerHeight && !hintShownRef.current) {
-        hintShownRef.current = true
-        setHintVisible(true)
-        setTimeout(() => setHintOpacity(1), 50)
+      if (activeIndexRef.current === services.length - 1) {
+        setHintOpacity(0)
+        setTimeout(() => setHintVisible(false), 800)
       }
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
-
-  useEffect(() => {
-    if (activeIndex === services.length - 1) {
-      setHintOpacity(0)
-      setTimeout(() => setHintVisible(false), 800)
-    }
-  }, [activeIndex])
 
   useEffect(() => {
     const sentinelEls = wrapperRef.current?.querySelectorAll("[data-index]")
@@ -224,7 +224,9 @@ export default function ServicesSection({ className = "" }: Props) {
             const index = parseInt(
               (entry.target as HTMLElement).dataset.index || "0"
             )
-            setActiveIndex(Math.min(index, services.length - 1))
+            const clamped = Math.min(index, services.length - 1)
+            activeIndexRef.current = clamped
+            setActiveIndex(clamped)
           }
         })
       },
