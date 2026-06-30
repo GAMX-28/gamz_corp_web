@@ -200,13 +200,9 @@ export default function ServicesSection({ className = "" }: Props) {
 
   useEffect(() => {
     if (!showHint) return
-    const timer = setTimeout(() => setShowHint(false), 4000)
+    const timer = setTimeout(() => setShowHint(false), 2000)
     return () => clearTimeout(timer)
   }, [showHint])
-
-  useEffect(() => {
-    if (activeIndex > 0) setShowHint(false)
-  }, [activeIndex])
 
   useEffect(() => {
     const sentinelEls = wrapperRef.current?.querySelectorAll("[data-index]")
