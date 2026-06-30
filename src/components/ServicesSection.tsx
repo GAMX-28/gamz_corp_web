@@ -370,45 +370,6 @@ export default function ServicesSection({ className = "" }: Props) {
 
         </div>
 
-        {/* Preview de servicios siguientes */}
-        <div style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: '120px',
-          background: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.95) 100%)',
-          display: 'flex',
-          alignItems: 'flex-end',
-          paddingBottom: '32px',
-          paddingLeft: '10%',
-          gap: '24px',
-          pointerEvents: 'none',
-          zIndex: 10,
-          opacity: activeIndex === services.length - 1 ? 0 : 1,
-          transition: 'opacity 0.5s ease',
-        }}>
-          {services.slice(1, 4).map((service, i) => (
-            <span key={i} style={{
-              fontFamily: 'Space Grotesk, sans-serif',
-              fontSize: '12px',
-              color: 'rgba(255,255,255,0.2)',
-              letterSpacing: '0.05em',
-              whiteSpace: 'nowrap',
-            }}>
-              {service.eyebrow}
-            </span>
-          ))}
-          <span style={{
-            fontFamily: 'Space Grotesk, sans-serif',
-            fontSize: '12px',
-            color: 'rgba(37,99,235,0.4)',
-            letterSpacing: '0.05em',
-          }}>
-            y más →
-          </span>
-        </div>
-
         {/* Dots — único bloque vertical lateral derecho */}
         <div
           style={{
