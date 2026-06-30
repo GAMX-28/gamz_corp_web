@@ -35,7 +35,6 @@ export default function DemoChat() {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, loading])
 
-  // Bloquea scroll del body cuando el modal está abierto
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
@@ -86,208 +85,213 @@ export default function DemoChat() {
 
   return (
     <>
-      {/* ── Trigger ── */}
+      {/* ── Botón flotante ── */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 font-space-grotesk
-          text-white text-[13px] font-medium px-4 py-2.5 rounded-full
-          border border-white/[0.14] bg-black/90 backdrop-blur-xl
-          hover:bg-white/[0.05] hover:border-white/30
-          transition-all duration-200 shadow-lg"
+        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-2.5 transition-all duration-200"
+        style={{
+          background: 'transparent',
+          border: '1px solid rgba(255,255,255,0.15)',
+          borderRadius: '4px',
+          color: '#ffffff',
+          fontSize: '12px',
+          fontFamily: 'Space Grotesk, sans-serif',
+          fontWeight: 600,
+          letterSpacing: '0.12em',
+          textTransform: 'uppercase',
+        }}
+        onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)')}
+        onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)')}
       >
-        <span className="relative flex h-1.5 w-1.5 flex-shrink-0">
-          <span className="animate-ping absolute inset-0 rounded-full bg-green-400 opacity-75" />
-          <span className="relative rounded-full bg-green-500 h-full w-full" />
-        </span>
-        Ver demo en vivo
+        <span style={{ width: '6px', height: '6px', borderRadius: '9999px', background: '#2563EB', flexShrink: 0, display: 'inline-block' }} />
+        DEMO EN VIVO
       </button>
 
       {/* ── Modal ── */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
-          {/* Backdrop */}
-          <div
-            className="absolute inset-0 bg-black/75 backdrop-blur-sm"
-            onClick={() => setIsOpen(false)}
-          />
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center"
+          style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(12px)' }}
+        >
+          <div className="absolute inset-0" onClick={() => setIsOpen(false)} />
 
-          {/* Panel */}
+          {/* Panel — mobile: full screen, desktop: 480×600 */}
           <div
-            className="sm:rounded-3xl sm:h-[560px] sm:max-h-[560px] sm:w-[400px] shadow-[0_32px_80px_rgba(0,0,0,0.7)]"
+            className="relative flex flex-col w-full h-full sm:w-[480px] sm:h-[600px]"
             style={{
-              position: 'relative',
-              width: '100%',
-              maxWidth: '428px',
-              height: '90vh',
-              maxHeight: '90vh',
-              background: '#0D0D0D',
-              border: '1px solid rgba(255,255,255,0.1)',
-              borderRadius: '24px 24px 0 0',
-              display: 'flex',
-              flexDirection: 'column',
+              background: '#0A0A0A',
+              borderRadius: 0,
+              border: 'none',
               overflow: 'hidden',
-              marginTop: 'auto',
             }}
           >
+            {/* Desktop border-radius y border via breakpoint */}
+            <style>{`.demo-panel-inner{border-radius:0;border:none}@media(min-width:640px){.demo-panel-inner{border-radius:12px!important;border:1px solid rgba(255,255,255,0.08)!important}}`}</style>
+            <div className="demo-panel-inner flex flex-col w-full h-full overflow-hidden" style={{ background: '#0A0A0A' }}>
 
-            {/* Header */}
-            <div className="flex items-start justify-between px-6 pt-6 pb-5 flex-shrink-0">
-              <div>
-                <p className="font-space-grotesk text-[15px] font-semibold text-white leading-tight">
-                  {step === 'select' ? 'Demo en vivo' : selectedLabel}
-                </p>
-                <div className="flex items-center gap-1.5 mt-1">
-                  {step === 'chat' && (
-                    <span className="inline-flex h-1.5 w-1.5 rounded-full bg-green-500 flex-shrink-0" />
-                  )}
-                  <p className="text-[11px] leading-none" style={{ color: '#555' }}>
-                    {step === 'select' ? '¿Qué tipo de negocio tienes?' : 'IA activa · respondiendo en tiempo real'}
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center gap-4 mt-0.5">
-                {step === 'chat' && (
-                  <button
-                    onClick={reset}
-                    className="font-space-grotesk text-[11px] uppercase tracking-[0.14em] transition-colors"
-                    style={{ color: '#444' }}
-                    onMouseEnter={e => (e.currentTarget.style.color = '#888')}
-                    onMouseLeave={e => (e.currentTarget.style.color = '#444')}
-                  >
-                    Cambiar
-                  </button>
-                )}
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="transition-colors flex-shrink-0"
-                  style={{ color: '#444' }}
-                  onMouseEnter={e => (e.currentTarget.style.color = '#888')}
-                  onMouseLeave={e => (e.currentTarget.style.color = '#444')}
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                    <path d="M18 6L6 18M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            {/* Divider */}
-            <div style={{ height: '1px', background: 'rgba(255,255,255,0.05)', flexShrink: 0 }} />
-
-            {/* ── Selector ── */}
-            {step === 'select' && (
-              <div className="flex-1 flex flex-col px-6 pt-8 gap-1 overflow-y-auto">
-                {BUSINESS_TYPES.map((b, i) => (
-                  <button
-                    key={b.id}
-                    onClick={() => selectBusiness(b.id)}
-                    className="group flex items-center gap-4 w-full text-left py-4 px-2 rounded-lg transition-all duration-150"
-                    style={{ background: 'transparent' }}
-                    onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.04)')}
-                    onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
-                  >
-                    <span
-                      className="text-xs font-mono flex-shrink-0 transition-colors duration-150 group-hover:text-white"
-                      style={{ color: '#2563EB' }}
-                    >
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <span className="font-space-grotesk text-[15px] font-medium text-white">
-                      {b.label}
-                    </span>
-                  </button>
-                ))}
-                <p
-                  className="text-[10px] text-center mt-auto pb-4 pt-6"
-                  style={{ color: '#2D2D2D' }}
-                >
-                  GAMZ Corp
-                </p>
-              </div>
-            )}
-
-            {/* ── Chat ── */}
-            {step === 'chat' && (
-              <>
-                <div className="flex-1 overflow-y-auto px-5 py-5 space-y-3">
-                  {messages.map((msg, i) => (
-                    <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                      <div
-                        className="max-w-[80%] px-4 py-2.5 text-[14px] leading-relaxed"
-                        style={
-                          msg.role === 'user'
-                            ? { background: '#2563EB', color: '#fff', borderRadius: '18px 18px 6px 18px' }
-                            : { background: '#141414', color: 'rgba(255,255,255,0.82)', borderRadius: '18px 18px 18px 6px', border: '1px solid rgba(255,255,255,0.06)' }
-                        }
+              {/* Header */}
+              <div style={{ padding: '24px 24px 0', flexShrink: 0 }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                  <div>
+                    <p style={{ color: '#ffffff', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 700, fontSize: '15px', lineHeight: 1.2, marginBottom: '6px' }}>
+                      {step === 'select' ? 'Elige tu tipo de negocio' : selectedLabel}
+                    </p>
+                    <p style={{ color: '#86868B', fontFamily: 'Inter, sans-serif', fontSize: '11px', lineHeight: 1 }}>
+                      {step === 'select'
+                        ? 'Demo de bot para WhatsApp y Telegram · GAMZ Corp'
+                        : 'IA activa · respondiendo en tiempo real'}
+                    </p>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginTop: '2px' }}>
+                    {step === 'chat' && (
+                      <button
+                        onClick={reset}
+                        style={{ color: '#86868B', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'Space Grotesk, sans-serif', fontSize: '11px', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', padding: 0, transition: 'color 0.15s' }}
+                        onMouseEnter={e => (e.currentTarget.style.color = '#ffffff')}
+                        onMouseLeave={e => (e.currentTarget.style.color = '#86868B')}
                       >
-                        {msg.content}
-                      </div>
-                    </div>
-                  ))}
-                  {loading && (
-                    <div className="flex justify-start">
-                      <div
-                        className="px-4 py-3 rounded-2xl"
-                        style={{ background: '#141414', border: '1px solid rgba(255,255,255,0.06)', borderBottomLeftRadius: '6px' }}
-                      >
-                        <div className="flex gap-[5px] items-center h-4">
-                          {[0, 160, 320].map((d) => (
-                            <span
-                              key={d}
-                              className="w-1.5 h-1.5 rounded-full animate-bounce"
-                              style={{ background: '#444', animationDelay: `${d}ms` }}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  <div ref={bottomRef} />
-                </div>
-
-                {/* Input */}
-                <div
-                  className="demo-input-area flex-shrink-0 px-4 pb-5 pt-3"
-                  style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}
-                >
-                  <div
-                    className="flex items-center gap-2 px-4 py-3 rounded-2xl transition-all duration-150"
-                    style={{ background: '#111', border: '1px solid rgba(255,255,255,0.08)' }}
-                    onFocus={() => {}}
-                  >
-                    <input
-                      type="text"
-                      value={input}
-                      onChange={(e) => setInput(e.target.value)}
-                      onKeyDown={handleKey}
-                      placeholder="Mensaje..."
-                      autoFocus
-                      className="flex-1 bg-transparent outline-none font-inter"
-                      style={{
-                        color: '#fff',
-                        fontSize: '16px', // Evita el zoom en iOS
-                        lineHeight: '1.4',
-                      }}
-                    />
+                        Cambiar
+                      </button>
+                    )}
                     <button
-                      onClick={sendMessage}
-                      disabled={!input.trim() || loading}
-                      className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-150"
-                      style={{
-                        background: input.trim() && !loading ? '#2563EB' : 'rgba(255,255,255,0.06)',
-                      }}
+                      onClick={() => setIsOpen(false)}
+                      style={{ color: '#86868B', background: 'none', border: 'none', cursor: 'pointer', fontSize: '22px', lineHeight: 1, padding: 0, transition: 'color 0.15s' }}
+                      onMouseEnter={e => (e.currentTarget.style.color = '#ffffff')}
+                      onMouseLeave={e => (e.currentTarget.style.color = '#86868B')}
                     >
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
-                        <path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z" />
-                      </svg>
+                      ×
                     </button>
                   </div>
-                  <p className="text-center mt-2.5 text-[10px]" style={{ color: '#2D2D2D' }}>
-                    GAMZ Corp
-                  </p>
                 </div>
-              </>
-            )}
+                <div style={{ height: '1px', background: 'rgba(255,255,255,0.06)', marginTop: '20px' }} />
+              </div>
+
+              {/* ── Selector ── */}
+              {step === 'select' && (
+                <div style={{ flex: 1, overflowY: 'auto', padding: '0 24px' }}>
+                  {BUSINESS_TYPES.map((b, i) => (
+                    <button
+                      key={b.id}
+                      onClick={() => selectBusiness(b.id)}
+                      className="selector-btn"
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '16px',
+                        width: '100%',
+                        textAlign: 'left',
+                        background: 'none',
+                        border: 'none',
+                        borderBottom: i < BUSINESS_TYPES.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none',
+                        padding: '16px 0',
+                        cursor: 'pointer',
+                      }}
+                      onMouseEnter={e => {
+                        const lbl = e.currentTarget.querySelector<HTMLElement>('.sel-label')
+                        if (lbl) lbl.style.color = '#2563EB'
+                      }}
+                      onMouseLeave={e => {
+                        const lbl = e.currentTarget.querySelector<HTMLElement>('.sel-label')
+                        if (lbl) lbl.style.color = '#ffffff'
+                      }}
+                    >
+                      <span style={{ color: '#2563EB', fontFamily: 'monospace', fontSize: '11px', flexShrink: 0 }}>
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <span
+                        className="sel-label"
+                        style={{ color: '#ffffff', fontFamily: 'Space Grotesk, sans-serif', fontSize: '14px', fontWeight: 500, transition: 'color 0.15s' }}
+                      >
+                        {b.label}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {/* ── Chat ── */}
+              {step === 'chat' && (
+                <>
+                  <div style={{ flex: 1, overflowY: 'auto', padding: '20px 24px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    {messages.map((msg, i) => (
+                      <div key={i} style={{ display: 'flex', justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start' }}>
+                        <div
+                          style={
+                            msg.role === 'user'
+                              ? { background: '#2563EB', color: '#ffffff', borderRadius: '8px', fontSize: '14px', lineHeight: '1.5', padding: '12px 16px', maxWidth: '85%', fontFamily: 'Inter, sans-serif' }
+                              : { background: '#141414', border: '1px solid rgba(255,255,255,0.06)', color: '#b0b0b0', borderRadius: '8px', fontSize: '14px', lineHeight: '1.5', padding: '12px 16px', maxWidth: '85%', fontFamily: 'Inter, sans-serif' }
+                          }
+                        >
+                          {msg.content}
+                        </div>
+                      </div>
+                    ))}
+                    {loading && (
+                      <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                        <div style={{ background: '#141414', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '8px', padding: '12px 16px' }}>
+                          <div style={{ display: 'flex', gap: '5px', alignItems: 'center', height: '16px' }}>
+                            {[0, 160, 320].map((d) => (
+                              <span
+                                key={d}
+                                className="animate-bounce"
+                                style={{ width: '6px', height: '6px', borderRadius: '9999px', background: '#444', animationDelay: `${d}ms`, display: 'block' }}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    <div ref={bottomRef} />
+                  </div>
+
+                  {/* Input */}
+                  <div
+                    className="demo-input-area"
+                    style={{ flexShrink: 0, padding: '12px 24px 20px', borderTop: '1px solid rgba(255,255,255,0.06)' }}
+                  >
+                    <div
+                      style={{ display: 'flex', alignItems: 'center', gap: '8px', background: '#141414', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '6px', padding: '10px 12px', transition: 'border-color 0.15s' }}
+                      onFocusCapture={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)')}
+                      onBlurCapture={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)')}
+                    >
+                      <input
+                        type="text"
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        onKeyDown={handleKey}
+                        placeholder="Escribe aquí..."
+                        autoFocus
+                        style={{ flex: 1, background: 'transparent', border: 'none', outline: 'none', color: '#ffffff', fontSize: '16px', fontFamily: 'Inter, sans-serif', lineHeight: '1.4' }}
+                      />
+                      <button
+                        onClick={sendMessage}
+                        disabled={!input.trim() || loading}
+                        style={{
+                          width: '30px',
+                          height: '30px',
+                          borderRadius: '4px',
+                          background: input.trim() && !loading ? '#2563EB' : 'rgba(255,255,255,0.06)',
+                          border: 'none',
+                          cursor: input.trim() && !loading ? 'pointer' : 'default',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          flexShrink: 0,
+                          transition: 'background 0.15s',
+                        }}
+                      >
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
+                          <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                      </button>
+                    </div>
+                    <p style={{ textAlign: 'center', marginTop: '10px', fontSize: '10px', color: '#2D2D2D', fontFamily: 'Inter, sans-serif' }}>
+                      Demo · Bot para WhatsApp y Telegram · GAMZ Corp
+                    </p>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </div>
       )}
