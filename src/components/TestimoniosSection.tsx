@@ -56,48 +56,61 @@ export default function TestimoniosSection() {
         Resultados reales
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-10">
+      <div
+        className="grid grid-cols-1 md:grid-cols-3 items-start"
+        style={{ gap: '48px' }}
+      >
         {testimonios.map((t, i) => (
           <div
             key={i}
             ref={(el) => { if (el) itemsRef.current[i] = el }}
             style={{
+              display: 'flex',
+              flexDirection: 'column',
+              height: '100%',
               opacity: 0,
               transform: 'translateY(32px)',
-              transition: `opacity 0.7s ease, transform 0.7s ease`,
+              transition: 'opacity 0.7s ease, transform 0.7s ease',
               transitionDelay: `${i * 120}ms`,
             }}
           >
-            <span
-              style={{
-                display: 'block',
-                color: '#2563EB',
-                fontFamily: 'Space Grotesk, sans-serif',
-                fontSize: '32px',
-                lineHeight: 1,
-                marginBottom: '16px',
-              }}
-            >
-              &ldquo;
-            </span>
-            <p
-              style={{
-                color: '#b0b0b0',
-                fontSize: '16px',
-                lineHeight: '1.7',
-                fontFamily: 'Inter, sans-serif',
-                marginBottom: '24px',
-              }}
-            >
-              {t.texto}
-            </p>
-            <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', marginBottom: '16px' }} />
-            <p style={{ color: '#ffffff', fontSize: '13px', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 600 }}>
-              {t.nombre}
-            </p>
-            <p style={{ color: '#86868B', fontSize: '12px', fontFamily: 'Inter, sans-serif' }}>
-              {t.negocio}
-            </p>
+            {/* Parte de arriba: comilla + texto */}
+            <div style={{ flex: 1 }}>
+              <span
+                style={{
+                  display: 'block',
+                  color: '#2563EB',
+                  fontFamily: 'Space Grotesk, sans-serif',
+                  fontSize: '32px',
+                  lineHeight: 1,
+                  marginBottom: '16px',
+                }}
+              >
+                &ldquo;
+              </span>
+              <p
+                style={{
+                  color: '#b0b0b0',
+                  fontSize: '16px',
+                  lineHeight: '1.7',
+                  fontFamily: 'Inter, sans-serif',
+                  marginBottom: '24px',
+                }}
+              >
+                {t.texto}
+              </p>
+            </div>
+
+            {/* Parte de abajo: separador + nombre + negocio */}
+            <div>
+              <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', marginBottom: '16px' }} />
+              <p style={{ color: '#ffffff', fontSize: '13px', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 600 }}>
+                {t.nombre}
+              </p>
+              <p style={{ color: '#86868B', fontSize: '12px', fontFamily: 'Inter, sans-serif' }}>
+                {t.negocio}
+              </p>
+            </div>
           </div>
         ))}
       </div>
