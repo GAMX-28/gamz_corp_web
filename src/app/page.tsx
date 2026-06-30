@@ -8,21 +8,21 @@ import AnimatedShaderHero from "@/components/ui/animated-shader-hero"
 import AnimatedNumber from "@/components/AnimatedNumber"
 
 // ── Projects ──────────────────────────────────────────────────────────────────
-const projects = [
+const steps = [
   {
     num: "01",
-    title: "Sistema de citas automatizado",
-    desc: "Tu negocio agenda solo, manda recordatorios y confirma citas por WhatsApp, sin que nadie tenga que estar pendiente del teléfono.",
+    title: "Nos cuentas qué necesitas",
+    desc: "Un mensaje es suficiente, nos dices cuál es el problema de tu negocio y nosotros te decimos qué podemos hacer por ti.",
   },
   {
     num: "02",
-    title: "Optimizador de rutas con IA",
-    desc: "Calcula las rutas más eficientes para tu flota de reparto, menos combustible, menos tiempo en carretera y más entregas por día.",
+    title: "Lo construimos a tu medida",
+    desc: "Desarrollamos el sistema exactamente para tu negocio, sin templates genéricos y sin tecnicismos que no entiendas.",
   },
   {
     num: "03",
-    title: "Páginas web profesionales",
-    desc: "Sitio diseñado a la medida de tu negocio, con lo que necesitas para vender, cobrar y atender clientes desde internet.",
+    title: "Lo recibes funcionando",
+    desc: "Lo instalamos, te explicamos cómo usarlo y seguimos disponibles si necesitas cualquier ajuste.",
   },
 ]
 
@@ -90,34 +90,33 @@ export default function Home() {
       {/* ── Testimonios ── */}
       <TestimoniosSection />
 
-      {/* ── Proyectos ── */}
-      <section id="proyectos" className="section-glow-subtle px-6 md:px-[10%] py-32 border-t border-white/[0.06]">
+      {/* ── Cómo funciona ── */}
+      <section id="como-funciona" className="section-glow-subtle px-6 md:px-[10%] py-32 border-t border-white/[0.06]">
         <p className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-5" style={{ color: "#2563EB" }}>
-          PROYECTOS
+          CÓMO FUNCIONA
         </p>
         <h2
           data-reveal
           className="font-space-grotesk text-[clamp(32px,4vw,52px)] font-bold text-white leading-[1.08] tracking-tight mb-20 max-w-xl"
         >
-          Lo que ya está<br />corriendo.
+          Así de simple.
         </h2>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 lg:gap-10">
-          {projects.map((p, i) => (
+          {steps.map((s, i) => (
             <div key={i} data-reveal data-delay={String(i * 100)} className="relative">
-              {/* Big background number */}
               <div
                 aria-hidden
                 className="font-space-grotesk font-bold text-white select-none leading-none mb-2"
                 style={{ fontSize: "clamp(72px,10vw,120px)", opacity: 0.13, lineHeight: 1 }}
               >
-                {p.num}
+                {s.num}
               </div>
               <h3 className="font-space-grotesk text-[22px] font-bold text-white leading-snug mb-3">
-                {p.title}
+                {s.title}
               </h3>
               <p className="text-[15px] leading-relaxed" style={{ color: grayColor }}>
-                {p.desc}
+                {s.desc}
               </p>
             </div>
           ))}
