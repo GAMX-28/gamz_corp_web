@@ -168,6 +168,7 @@ export default function ServicesSection({ className = "" }: Props) {
   const [inView, setInView] = useState(false)
   const [hintVisible, setHintVisible] = useState(false)
   const [hintOpacity, setHintOpacity] = useState(0)
+  const hintShownRef = useRef(false)
 
   useEffect(() => {
     if (window.innerWidth < 768) setGrayColor('#a0a0a0')
@@ -185,19 +186,24 @@ export default function ServicesSection({ className = "" }: Props) {
   }, [])
 
   useEffect(() => {
-    if (!wrapperRef.current) return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setHintVisible(true)
-          setTimeout(() => setHintOpacity(1), 50)
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.1 }
-    )
-    observer.observe(wrapperRef.current)
-    return () => observer.disconnect()
+    const onScroll = () => {
+      if (!wrapperRef.current) return
+      const rect = wrapperRef.current.getBoundingClientRect()
+
+      if (rect.top > window.innerHeight * 0.5) {
+        hintShownRef.current = false
+        setHintOpacity(0)
+        setTimeout(() => setHintVisible(false), 800)
+      }
+
+      if (rect.top <= 0 && rect.bottom > window.innerHeight && !hintShownRef.current) {
+        hintShownRef.current = true
+        setHintVisible(true)
+        setTimeout(() => setHintOpacity(1), 50)
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   useEffect(() => {
